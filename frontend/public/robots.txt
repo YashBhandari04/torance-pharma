@@ -1,0 +1,7 @@
+# Robots.txt for TORANCE LIFE SCIENCE PVT. LTD.
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://torancelifescience.com/sitemap.xml
