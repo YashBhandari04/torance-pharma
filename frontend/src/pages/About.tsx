@@ -13,7 +13,7 @@ export const About: React.FC = () => {
             Corporate Profile
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            About Torance Life Science
+            About Torrance Life Science
           </h1>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
             A trusted pharmaceutical manufacturer driven by patient safety, clinical efficacy, and advanced formulation chemistry.
@@ -47,7 +47,7 @@ export const About: React.FC = () => {
         <div className="bg-slate-900 text-white p-8 sm:p-12 rounded-3xl space-y-8">
           <div className="max-w-2xl space-y-2">
             <h2 className="text-3xl font-extrabold">Manufacturing & Quality Infrastructure</h2>
-            <p className="text-slate-400 text-sm">Our WHO-GMP compliant facilities in Gujarat represent the gold standard in pharmaceutical engineering.</p>
+            <p className="text-slate-400 text-sm">Our WHO-GMP compliant facilities represent the gold standard in pharmaceutical engineering.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">

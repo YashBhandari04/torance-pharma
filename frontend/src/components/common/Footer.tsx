@@ -20,13 +20,13 @@ export const Footer: React.FC = () => {
                 T
               </div>
               <div>
-                <span className="font-extrabold text-xl text-white tracking-tight">TORANCE</span>
+                <span className="font-extrabold text-xl text-white tracking-tight">TORRANCE</span>
                 <span className="text-sky-400 font-semibold text-sm block -mt-1">LIFE SCIENCE PVT. LTD.</span>
               </div>
             </div>
             
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              TORANCE LIFE SCIENCE is a premier WHO-GMP certified pharmaceutical manufacturing & marketing company committed to high-potency formulations across cardiovascular, gastroenterology, antibiotics, and neurosciences.
+              TORRANCE LIFE SCIENCE PVT. LTD. is a premier WHO-GMP certified pharmaceutical manufacturing & marketing company committed to high-potency formulations across 17 therapeutic categories.
             </p>
 
             <div className="flex flex-wrap gap-2 pt-2">

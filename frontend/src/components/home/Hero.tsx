@@ -24,12 +24,12 @@ export const Hero: React.FC = () => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              Innovating Health, <br className="hidden sm:inline" />
-              <span className="text-gradient">Elevating Human Life</span>
+              Quality Medication, <br className="hidden sm:inline" />
+              <span className="text-gradient">Crafted with Care</span>
             </h1>
 
             <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              TORANCE LIFE SCIENCE PVT. LTD. develops, manufactures, and markets high-potency ethical pharmaceuticals across cardiovascular, gastroenterology, anti-infectives, and neuro-care divisions.
+              TORRANCE LIFE SCIENCE PVT. LTD. develops, manufactures, and markets high-potency ethical pharmaceuticals across 17 therapeutic categories.
             </p>
 
             {/* CTA Buttons */}
@@ -54,7 +54,7 @@ export const Hero: React.FC = () => {
             <div className="pt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-left">
               <div className="flex items-center space-x-2 text-xs font-medium text-slate-700 bg-white/70 backdrop-blur-xs p-2.5 rounded-lg border border-slate-200/60 shadow-xs">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>150+ Approved Formulations</span>
+                <span>79+ Approved Formulations</span>
               </div>
               <div className="flex items-center space-x-2 text-xs font-medium text-slate-700 bg-white/70 backdrop-blur-xs p-2.5 rounded-lg border border-slate-200/60 shadow-xs">
                 <ShieldCheck className="w-4 h-4 text-sky-500 shrink-0" />
@@ -76,7 +76,7 @@ export const Hero: React.FC = () => {
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 aspect-4/3 sm:aspect-square">
                 <img
                   src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=1200"
-                  alt="Torance Life Science Pharmaceutical Laboratory"
+                  alt="Torrance Life Science Pharmaceutical Laboratory"
                   className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/20 to-transparent" />

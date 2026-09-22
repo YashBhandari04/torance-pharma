@@ -40,7 +40,7 @@ export const ResearchDevelopment: React.FC = () => {
               Research & Development
             </h1>
             <p className="text-slate-300 text-base leading-relaxed">
-              At Torance Life Science, our dedicated R&D scientists bridge modern pharmaceutical chemistry with therapeutic precision, ensuring highest bioavailability and patient compliance.
+              At Torrance Life Science, our dedicated R&D scientists bridge modern pharmaceutical chemistry with therapeutic precision, ensuring highest bioavailability and patient compliance.
             </p>
           </div>
         </div>
@@ -64,7 +64,7 @@ export const ResearchDevelopment: React.FC = () => {
             <span className="text-xs font-bold text-sky-600 uppercase tracking-widest">State-of-the-Art Labs</span>
             <h2 className="text-3xl font-extrabold text-slate-900">Analytical & Formulation Infrastructure</h2>
             <p className="text-slate-600 text-sm leading-relaxed">
-              Our central R&D center in Ahmedabad houses modern instrumentation including Waters HPLC systems, Agilent UV-Vis Spectrophotometers, Brookfield Viscometers, and automated Dissolution Testing Apparatus (USP Type I & II).
+              Our central R&D center houses modern instrumentation including Waters HPLC systems, Agilent UV-Vis Spectrophotometers, Brookfield Viscometers, and automated Dissolution Testing Apparatus (USP Type I & II).
             </p>
             <div className="grid grid-cols-2 gap-4 pt-2 text-xs font-semibold text-slate-700">
               <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-xl border border-slate-100">
@@ -81,7 +81,7 @@ export const ResearchDevelopment: React.FC = () => {
           <div className="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-lg aspect-4/3">
             <img 
               src="https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&q=80&w=800" 
-              alt="Torance Analytical R&D Laboratory" 
+              alt="Torrance Analytical R&D Laboratory" 
               className="w-full h-full object-cover"
             />
           </div>

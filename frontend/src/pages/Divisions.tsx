@@ -17,7 +17,7 @@ export const Divisions: React.FC = () => {
             Therapeutic Divisions
           </h1>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-            Torance Life Science operates specialized division SBUs dedicated to focused medical specialties, ensuring targeted promotion and tailored formulation science.
+            Torrance Life Science operates specialized division SBUs dedicated to focused medical specialties, ensuring targeted promotion and tailored formulation science.
           </p>
         </div>
 

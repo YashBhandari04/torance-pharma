@@ -16,7 +16,7 @@ export const EnquiryCTA: React.FC = () => {
               </span>
 
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                Expand Your Pharmaceutical Business with Torance
+                Expand Your Pharmaceutical Business with Torrance
               </h2>
 
               <p className="text-slate-300 text-base leading-relaxed max-w-2xl">

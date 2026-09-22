@@ -56,7 +56,7 @@ export const Careers: React.FC = () => {
             Join Our Team
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Careers at Torance Life Science
+            Careers at Torrance Life Science
           </h1>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
             Build your professional legacy with a dynamic, fast-growing pharmaceutical leader dedicated to scientific innovation and employee growth.

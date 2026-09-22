@@ -68,10 +68,10 @@ export const Navbar: React.FC = () => {
             </div>
             <div>
               <div className="font-extrabold text-lg leading-tight tracking-tight text-slate-900 flex items-center">
-                TORANCE <span className="text-sky-600 font-semibold ml-1.5 text-sm">LIFE SCIENCE</span>
+                TORRANCE <span className="text-sky-600 font-semibold ml-1.5 text-sm">LIFE SCIENCE</span>
               </div>
               <p className="text-[10px] tracking-wider text-slate-500 font-medium uppercase">
-                Pvt. Ltd. • Healthcare Excellence
+                Pvt. Ltd. • Quality Medication, Crafted with Care
               </p>
             </div>
           </Link>

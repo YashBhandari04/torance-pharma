@@ -42,7 +42,7 @@ export const QualityCommitment: React.FC = () => {
             Our Quality Assurance Framework
           </h2>
           <p className="text-slate-400 text-base leading-relaxed">
-            At Torance Life Science, quality is embedded at every stage of development — from API synthesis verification to final packaging.
+            At Torrance Life Science, quality is embedded at every stage of development — from API synthesis verification to final packaging.
           </p>
         </div>
 

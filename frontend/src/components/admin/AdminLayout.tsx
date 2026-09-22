@@ -39,7 +39,7 @@ export const AdminLayout: React.FC = () => {
               T
             </div>
             <div>
-              <div className="font-extrabold text-sm text-white tracking-tight">TORANCE ADMIN</div>
+              <div className="font-extrabold text-sm text-white tracking-tight">TORRANCE ADMIN</div>
               <p className="text-[10px] text-sky-400 font-medium uppercase tracking-wider">Management Portal</p>
             </div>
           </div>
