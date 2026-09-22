@@ -34,13 +34,13 @@ export const AdminLayout: React.FC = () => {
       <aside className="w-full lg:w-64 bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-800 flex flex-col justify-between shrink-0">
         <div>
           {/* Admin Header Brand */}
-          <div className="p-6 border-b border-slate-800 flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md">
-              T
+          <div className="p-4 border-b border-slate-800 flex items-center space-x-3">
+            <div className="bg-white p-1 rounded-lg shadow-sm shrink-0">
+              <img src="/logo.png" alt="Torrance Admin" className="h-9 w-auto object-contain" />
             </div>
             <div>
-              <div className="font-extrabold text-sm text-white tracking-tight">TORRANCE ADMIN</div>
-              <p className="text-[10px] text-sky-400 font-medium uppercase tracking-wider">Management Portal</p>
+              <div className="font-extrabold text-xs text-white tracking-tight">ADMIN PORTAL</div>
+              <p className="text-[10px] text-sky-400 font-medium uppercase tracking-wider">Torrance Life Science</p>
             </div>
           </div>
 

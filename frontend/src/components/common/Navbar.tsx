@@ -61,19 +61,12 @@ export const Navbar: React.FC = () => {
       <nav className="glass-card bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 py-3.5">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Corporate Brand Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-900 via-sky-900 to-sky-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-200">
-              <span className="font-bold text-xl tracking-tighter">T</span>
-              <span className="text-sky-400 font-extrabold text-xs ml-0.5">LS</span>
-            </div>
-            <div>
-              <div className="font-extrabold text-lg leading-tight tracking-tight text-slate-900 flex items-center">
-                TORRANCE <span className="text-sky-600 font-semibold ml-1.5 text-sm">LIFE SCIENCE</span>
-              </div>
-              <p className="text-[10px] tracking-wider text-slate-500 font-medium uppercase">
-                Pvt. Ltd. • Quality Medication, Crafted with Care
-              </p>
-            </div>
+          <Link to="/" className="flex items-center group">
+            <img 
+              src="/logo.png" 
+              alt="Torrance Life Science Pvt Ltd" 
+              className="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop Navigation Links */}

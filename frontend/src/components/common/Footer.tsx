@@ -15,14 +15,12 @@ export const Footer: React.FC = () => {
           
           {/* Col 1: Corporate Profile */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xl shadow-lg">
-                T
-              </div>
-              <div>
-                <span className="font-extrabold text-xl text-white tracking-tight">TORRANCE</span>
-                <span className="text-sky-400 font-semibold text-sm block -mt-1">LIFE SCIENCE PVT. LTD.</span>
-              </div>
+            <div className="bg-white p-2 rounded-xl inline-block shadow-md mb-2">
+              <img 
+                src="/logo.png" 
+                alt="Torrance Life Science Pvt Ltd" 
+                className="h-12 w-auto object-contain"
+              />
             </div>
             
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
