@@ -69,7 +69,59 @@ export const About: React.FC = () => {
             <div className="p-4 rounded-xl bg-slate-800 border border-slate-700 space-y-2">
               <ShieldCheck className="w-6 h-6 text-indigo-400" />
               <h3 className="font-bold text-white">Pharmacovigilance</h3>
-              <p className="text-slate-400 text-xs">Dedicated adverse event monitoring and medical safety reporting.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Key Department Management */}
+        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm space-y-8">
+          <div className="max-w-2xl space-y-2">
+            <span className="px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-semibold">
+              Department Management
+            </span>
+            <h2 className="text-3xl font-extrabold text-slate-900">Key Company Contact & Operational Leadership</h2>
+            <p className="text-slate-600 text-sm">
+              Our dedicated department managers oversee critical care & gastroenterology product lines, operational compliance, and service excellence across India.
+            </p>
+          </div>
+
+          <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200/80 max-w-3xl flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            <div className="w-32 h-36 rounded-2xl overflow-hidden shadow-md border-2 border-slate-200 shrink-0 bg-slate-200">
+              <img 
+                src={COMPANY_INFO.keyContact.image} 
+                alt={COMPANY_INFO.keyContact.name} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="space-y-3 flex-1 text-center sm:text-left">
+              <div>
+                <h3 className="text-xl font-bold text-slate-900">{COMPANY_INFO.keyContact.name}</h3>
+                <p className="text-xs font-bold text-sky-600">{COMPANY_INFO.keyContact.designation}</p>
+                <p className="text-xs font-semibold text-slate-600">{COMPANY_INFO.keyContact.segment}</p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-600 pt-3 border-t border-slate-200/80">
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Experience at Torrance</span>
+                  <span className="font-semibold text-slate-800">{COMPANY_INFO.keyContact.experienceAtTorrance}</span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Overall Experience</span>
+                  <span className="font-semibold text-slate-800">{COMPANY_INFO.keyContact.overallExperience}</span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Education</span>
+                  <span className="font-semibold text-slate-800">{COMPANY_INFO.keyContact.education}</span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Location</span>
+                  <span className="font-semibold text-slate-800">{COMPANY_INFO.keyContact.location}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

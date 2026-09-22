@@ -84,25 +84,81 @@ export const Contact: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Office Contacts */}
+          {/* Left Column: Company Contact & Office Details */}
           <div className="lg:col-span-5 space-y-6">
             
-            {/* Corporate Office Card */}
-            <div className="p-8 rounded-3xl bg-slate-900 text-white shadow-xl space-y-4">
+            {/* Company Contact Card - Key Management Profile */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl space-y-5">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 className="font-extrabold text-lg text-slate-900 flex items-center space-x-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-sky-500 inline-block" />
+                  <span>Company Contact</span>
+                </h3>
+                <span className="px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 text-[10px] font-bold border border-sky-200 uppercase">
+                  Management
+                </span>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                <div className="w-28 h-32 rounded-2xl overflow-hidden shadow-md border-2 border-slate-200 shrink-0 bg-slate-100">
+                  <img 
+                    src={COMPANY_INFO.keyContact.image} 
+                    alt={COMPANY_INFO.keyContact.name} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <div className="space-y-2 flex-1 text-center sm:text-left">
+                  <div>
+                    <h4 className="text-lg font-extrabold text-slate-900 leading-tight">{COMPANY_INFO.keyContact.name}</h4>
+                    <p className="text-xs font-semibold text-slate-700 mt-0.5">{COMPANY_INFO.keyContact.designation}</p>
+                    <p className="text-[11px] font-medium text-sky-600">{COMPANY_INFO.keyContact.segment}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3 pt-3 border-t border-slate-100 text-xs">
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Experience at Torrance</span>
+                  <span className="font-semibold text-slate-800">{COMPANY_INFO.keyContact.experienceAtTorrance}</span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Overall Professional Experience</span>
+                  <span className="font-semibold text-slate-800">{COMPANY_INFO.keyContact.overallExperience}</span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Education</span>
+                  <span className="font-semibold text-slate-800">{COMPANY_INFO.keyContact.education}</span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Location</span>
+                  <span className="font-semibold text-slate-800">{COMPANY_INFO.keyContact.location}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Company Address Card */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white shadow-xl space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">
+                <div className="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold shrink-0">
                   <Building2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-white">Corporate Headquarters</h3>
-                  <span className="text-xs text-sky-400">Ahmedabad, Gujarat</span>
+                  <h3 className="font-extrabold text-lg text-white">Company Address</h3>
+                  <span className="text-xs text-sky-400 font-medium">Registered Office</span>
                 </div>
               </div>
 
               <div className="space-y-3 text-xs text-slate-300 pt-2 border-t border-slate-800">
                 <div className="flex items-start space-x-3">
                   <MapPin className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                  <span>{COMPANY_INFO.address}</span>
+                  <span>
+                    <strong className="text-white block">{COMPANY_INFO.name}</strong>
+                    {COMPANY_INFO.address}
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="w-4 h-4 text-sky-400 shrink-0" />
@@ -115,24 +171,7 @@ export const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Plant Facility Card */}
-            <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-slate-900">Manufacturing Unit</h3>
-                  <span className="text-xs text-purple-600 font-semibold">WHO-GMP Facility</span>
-                </div>
-              </div>
-
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {COMPANY_INFO.manufacturingFacility}
-              </p>
-            </div>
-
-            {/* Business Hours */}
+            {/* Commercial Support Hours */}
             <div className="p-6 rounded-2xl bg-sky-50 border border-sky-200 text-xs text-sky-900 space-y-2">
               <div className="flex items-center space-x-2 font-bold">
                 <Clock className="w-4 h-4 text-sky-600" />

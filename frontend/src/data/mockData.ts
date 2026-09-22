@@ -29,6 +29,16 @@ export const COMPANY_INFO = {
     countriesServed: '12+',
     distributors: '500+',
     therapeuticSegments: '17'
+  },
+  keyContact: {
+    name: 'Saurabh Rastogi',
+    designation: 'Assistant Manager — Department Management',
+    segment: 'Critical Care & Gastrointestinal Segment',
+    experienceAtTorrance: 'Since April 2024 (approx. 2.5 years)',
+    overallExperience: '12+ years in Service roles, Greater Delhi Area',
+    education: 'Chaudhary Charan Singh University (CCSU), Meerut',
+    location: 'Meerut, Uttar Pradesh, India',
+    image: '/saurabh-rastogi.png'
   }
 };
 
