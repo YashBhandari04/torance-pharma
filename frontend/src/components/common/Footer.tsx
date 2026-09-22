@@ -15,11 +15,11 @@ export const Footer: React.FC = () => {
           
           {/* Col 1: Corporate Profile */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="bg-white p-3 rounded-2xl inline-block shadow-lg mb-2">
+            <div className="bg-white p-3.5 rounded-2xl inline-block shadow-lg mb-2">
               <img 
                 src="/logo.png" 
                 alt="Torrance Life Science Pvt Ltd" 
-                className="h-16 sm:h-20 w-auto object-contain"
+                className="h-20 sm:h-24 w-auto object-contain"
               />
             </div>
             

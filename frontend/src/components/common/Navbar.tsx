@@ -61,11 +61,11 @@ export const Navbar: React.FC = () => {
       <nav className="glass-card bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 py-3.5">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Corporate Brand Logo */}
-          <Link to="/" className="flex items-center group py-0.5">
+          <Link to="/" className="flex items-center group py-1">
             <img 
               src="/logo.png" 
               alt="Torrance Life Science Pvt Ltd" 
-              className="h-14 sm:h-16 lg:h-20 w-auto object-contain max-h-20 transition-transform duration-200 group-hover:scale-105"
+              className="h-16 sm:h-20 lg:h-24 w-auto object-contain transition-transform duration-200 group-hover:scale-105 drop-shadow-xs"
             />
           </Link>
 
