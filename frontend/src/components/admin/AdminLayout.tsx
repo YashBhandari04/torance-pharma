@@ -35,8 +35,8 @@ export const AdminLayout: React.FC = () => {
         <div>
           {/* Admin Header Brand */}
           <div className="p-4 border-b border-slate-800 flex items-center space-x-3">
-            <div className="bg-white p-1 rounded-lg shadow-sm shrink-0">
-              <img src="/logo.png" alt="Torrance Admin" className="h-9 w-auto object-contain" />
+            <div className="bg-white p-2 rounded-xl shadow-md shrink-0">
+              <img src="/logo.png" alt="Torrance Admin" className="h-14 w-auto object-contain" />
             </div>
             <div>
               <div className="font-extrabold text-xs text-white tracking-tight">ADMIN PORTAL</div>
