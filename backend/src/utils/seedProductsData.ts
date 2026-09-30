@@ -7,6 +7,7 @@ export interface SeedCategory {
 
 export interface SeedProduct {
   brandName: string;
+  slug: string;
   genericName: string;
   composition: string;
   strength: string;
@@ -130,6 +131,7 @@ export const SEED_CATEGORIES: SeedCategory[] = [
 export const SEED_PRODUCTS: SeedProduct[] = [
   {
     "brandName": "FOSFOANCE",
+    "slug": "fosfoance",
     "genericName": "Fosfomycin Trometamol 3gm Sachet",
     "composition": "Fosfomycin Trometamol 3gm Sachet",
     "strength": "3gm",
@@ -148,6 +150,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "FAROANCE / ER",
+    "slug": "faroance-er",
     "genericName": "Faropenem Sodium 200mg / 300mg (ER) Tablet",
     "composition": "Faropenem Sodium 200mg / 300mg (ER) Tablet",
     "strength": "200mg / 300mg ER",
@@ -167,6 +170,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "FAROANCE-CV",
+    "slug": "faroance-cv",
     "genericName": "Faropenem Sodium 200mg & Potassium Clavulanate 125mg",
     "composition": "Faropenem Sodium 200mg & Potassium Clavulanate 125mg",
     "strength": "200mg + 125mg",
@@ -185,6 +189,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "CEFIANCE",
+    "slug": "cefiance",
     "genericName": "Cefuroxime Axetil IP 250mg / 500mg Tablet",
     "composition": "Cefuroxime Axetil IP 250mg / 500mg Tablet",
     "strength": "250mg / 500mg",
@@ -205,6 +210,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "LINEZOACT 600",
+    "slug": "linezoact-600",
     "genericName": "Linezolid Tablets IP 600mg",
     "composition": "Linezolid Tablets IP 600mg",
     "strength": "600mg",
@@ -224,6 +230,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "Cepotor-O",
+    "slug": "cepotor-o",
     "genericName": "Cefpodoxime 200mg and Ofloxacin 200mg",
     "composition": "Cefpodoxime 200mg and Ofloxacin 200mg",
     "strength": "200mg + 200mg",
@@ -243,6 +250,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "RIFANCE",
+    "slug": "rifance",
     "genericName": "Rifaximin 400mg / 550mg Tablet",
     "composition": "Rifaximin 400mg / 550mg Tablet",
     "strength": "400mg / 550mg",
@@ -262,6 +270,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "SODANCE IV",
+    "slug": "sodance-iv",
     "genericName": "Sodium Bicarbonate Injection IP",
     "composition": "Sodium Bicarbonate Injection IP",
     "strength": "Infusion Standard",
@@ -280,6 +289,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "CLINDANCE",
+    "slug": "clindance",
     "genericName": "Clindamycin Injection IP 600mg/4ml",
     "composition": "Clindamycin Injection IP 600mg/4ml",
     "strength": "600mg / 4ml",
@@ -299,6 +309,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TEICOANCE",
+    "slug": "teicoance",
     "genericName": "Teicoplanin Injection IP 400mg",
     "composition": "Teicoplanin Injection IP 400mg",
     "strength": "400mg",
@@ -318,6 +329,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "CEFPIME-TZ",
+    "slug": "cefpime-tz",
     "genericName": "Cefepime 1gm & Tazobactam 125mg Injection",
     "composition": "Cefepime 1gm & Tazobactam 125mg Injection",
     "strength": "1gm + 125mg",
@@ -337,6 +349,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRNAM",
+    "slug": "torrnam",
     "genericName": "Aztreonam 1gm Injection",
     "composition": "Aztreonam 1gm Injection",
     "strength": "1gm",
@@ -355,6 +368,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "ZAVIANCE",
+    "slug": "zaviance",
     "genericName": "Ceftazidime 2gm & Avibactam Powder 500mg for Infusion",
     "composition": "Ceftazidime 2gm & Avibactam Powder 500mg for Infusion",
     "strength": "2gm + 500mg",
@@ -374,6 +388,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TOBANCE-CZ",
+    "slug": "tobance-cz",
     "genericName": "Ceftazidime & Tobramycin for Injection (1.120gm)",
     "composition": "Ceftazidime & Tobramycin for Injection (1.120gm)",
     "strength": "1.120gm",
@@ -392,6 +407,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "FOSFOANCE (Inj.)",
+    "slug": "fosfoance-inj",
     "genericName": "Fosfomycin for Injection 4gm",
     "composition": "Fosfomycin for Injection 4gm",
     "strength": "4gm",
@@ -411,6 +427,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "COLIANCE",
+    "slug": "coliance",
     "genericName": "Colistimethate Sodium 1MIU/2MIU/4.5MIU Injection",
     "composition": "Colistimethate Sodium 1MIU/2MIU/4.5MIU Injection",
     "strength": "1MIU / 2MIU / 4.5MIU",
@@ -429,6 +446,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "POLYANCE",
+    "slug": "polyance",
     "genericName": "Polymyxin B for Injection USP",
     "composition": "Polymyxin B for Injection USP 500,000 Units",
     "strength": "500,000 Units",
@@ -447,6 +465,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "MINOANCE",
+    "slug": "minoance",
     "genericName": "Minocycline for Injection USP 100mg",
     "composition": "Minocycline for Injection USP 100mg",
     "strength": "100mg",
@@ -466,6 +485,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TIGEANCE",
+    "slug": "tigeance",
     "genericName": "Tigecycline Injection IP 50mg (Lyophilized)",
     "composition": "Tigecycline Injection IP 50mg (Lyophilized)",
     "strength": "50mg",
@@ -485,6 +505,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TIGEANCE-PLUS",
+    "slug": "tigeance-plus",
     "genericName": "Tigecycline Injection IP 50mg (Lyophilized)",
     "composition": "Tigecycline Injection IP 50mg (Lyophilized)",
     "strength": "50mg High Purity",
@@ -503,6 +524,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "T-DOXY",
+    "slug": "t-doxy",
     "genericName": "Doxycycline for Injection USP 100mg",
     "composition": "Doxycycline for Injection USP 100mg",
     "strength": "100mg",
@@ -522,6 +544,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "CEFRANCE-ES",
+    "slug": "cefrance-es",
     "genericName": "Cefoperazone Disodium and Sulbactam Powder 3gm/1.5gm for Infusion",
     "composition": "Cefoperazone Disodium and Sulbactam Powder 3gm/1.5gm for Infusion",
     "strength": "3gm / 1.5gm",
@@ -540,6 +563,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "AUXIBACT 1.5 GM",
+    "slug": "auxibact-1-5-gm",
     "genericName": "Cefoperazone 1gm & Sulbactam 0.5gm for Injection",
     "composition": "Cefoperazone 1gm & Sulbactam 0.5gm for Injection",
     "strength": "1gm + 0.5gm",
@@ -559,6 +583,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TAZOCIN 4.5 GM",
+    "slug": "tazocin-4-5-gm",
     "genericName": "Piperacillin 4gm & Tazobactam 0.5gm Injection",
     "composition": "Piperacillin 4gm & Tazobactam 0.5gm Injection",
     "strength": "4gm + 0.5gm",
@@ -578,6 +603,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TAZOANCE",
+    "slug": "tazoance",
     "genericName": "Piperacillin 4gm + Tazobactam 500mg Injection",
     "composition": "Piperacillin 4gm + Tazobactam 500mg Injection",
     "strength": "4gm + 500mg",
@@ -597,6 +623,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "XEDCLAV 1.2 GM",
+    "slug": "xedclav-1-2-gm",
     "genericName": "Amoxycillin Sodium 1000mg, Potassium Clavulanate 200mg",
     "composition": "Amoxycillin Sodium 1000mg, Potassium Clavulanate 200mg",
     "strength": "1000mg + 200mg",
@@ -615,6 +642,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRBETA 1.5 GM",
+    "slug": "torrbeta-1-5-gm",
     "genericName": "Amoxycillin 1000mg and Sulbactam 500mg for Injection",
     "composition": "Amoxycillin 1000mg and Sulbactam 500mg for Injection",
     "strength": "1000mg + 500mg",
@@ -633,6 +661,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "MEROANCE",
+    "slug": "meroance",
     "genericName": "Meropenem Injection IP 500mg/1gm",
     "composition": "Meropenem Injection IP 500mg/1gm",
     "strength": "500mg / 1gm",
@@ -652,6 +681,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "MEROANCE-S",
+    "slug": "meroance-s",
     "genericName": "Meropenem and Sulbactam for Injection 1.5gm",
     "composition": "Meropenem and Sulbactam for Injection 1.5gm",
     "strength": "1gm + 500mg",
@@ -670,6 +700,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "ERTANCE",
+    "slug": "ertance",
     "genericName": "Ertapenem for Injection 1000mg",
     "composition": "Ertapenem for Injection 1000mg",
     "strength": "1000mg",
@@ -689,6 +720,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "DULANCE",
+    "slug": "dulance",
     "genericName": "Anidulafungin for Injection 100mg/vial (Lyophilized)",
     "composition": "Anidulafungin for Injection 100mg/vial (Lyophilized)",
     "strength": "100mg/vial",
@@ -708,6 +740,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TG-RAFT",
+    "slug": "tg-raft",
     "genericName": "Sodium Alginate 250mg, Sodium Bicarbonate 133.5mg, Calcium Carbonate 80mg Oral Susp.",
     "composition": "Sodium Alginate 250mg, Sodium Bicarbonate 133.5mg, Calcium Carbonate 80mg Oral Susp.",
     "strength": "250mg + 133.5mg + 80mg",
@@ -727,6 +760,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRGEL-O",
+    "slug": "torrgel-o",
     "genericName": "Sucralfate 1gm & Oxetacaine 20mg Suspension",
     "composition": "Sucralfate 1gm & Oxetacaine 20mg Suspension",
     "strength": "1gm + 20mg",
@@ -746,6 +780,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRGEL",
+    "slug": "torrgel",
     "genericName": "Magaldrate 400mg & Simethicone 60mg / Oral Suspension IP",
     "composition": "Magaldrate 400mg & Simethicone 60mg / Oral Suspension IP",
     "strength": "400mg + 60mg",
@@ -765,6 +800,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "ESOANCE 40/DSR",
+    "slug": "esoance-40-dsr",
     "genericName": "Esomeprazole Magnesium 40mg + Domperidone 30mg (SR) Capsules",
     "composition": "Esomeprazole Magnesium 40mg + Domperidone 30mg (SR) Capsules",
     "strength": "40mg + 30mg SR",
@@ -784,6 +820,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "PANTANCE-40/DSR",
+    "slug": "pantance-40-dsr",
     "genericName": "Pantoprazole 40mg, Domperidone 30mg SR Prolonged-Release Cap. IP",
     "composition": "Pantoprazole 40mg, Domperidone 30mg SR Prolonged-Release Cap. IP",
     "strength": "40mg + 30mg SR",
@@ -803,6 +840,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "PANTANCE IV 40MG",
+    "slug": "pantance-iv-40mg",
     "genericName": "Pantoprazole for Injection 40mg",
     "composition": "Pantoprazole for Injection 40mg",
     "strength": "40mg",
@@ -822,6 +860,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "ESOANCE (Inj.)",
+    "slug": "esoance-inj",
     "genericName": "Esomeprazole 40mg Injection",
     "composition": "Esomeprazole 40mg Injection",
     "strength": "40mg",
@@ -841,6 +880,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "PEGETOR",
+    "slug": "pegetor",
     "genericName": "Polyethylene Glycol 3350 + Sodium Chloride, Sodium Bicarbonate + Potassium Chloride Oral Solution",
     "composition": "Polyethylene Glycol 3350 + Sodium Chloride, Sodium Bicarbonate + Potassium Chloride Oral Solution",
     "strength": "PEG 3350 Electrolyte Formula",
@@ -860,6 +900,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "EASYGUT",
+    "slug": "easygut",
     "genericName": "Lactulose Solution 200ml, USP",
     "composition": "Lactulose Solution 200ml, USP",
     "strength": "10g / 15ml",
@@ -879,6 +920,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "FIBREANCE",
+    "slug": "fibreance",
     "genericName": "Lactitol Monohydrate 10g & Ispaghula Husk 3.5g Granules",
     "composition": "Lactitol Monohydrate 10g & Ispaghula Husk 3.5g Granules",
     "strength": "10g + 3.5g",
@@ -898,6 +940,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "PRUANCE",
+    "slug": "pruance",
     "genericName": "Prucalopride 1mg/2mg Tablet",
     "composition": "Prucalopride 1mg/2mg Tablet",
     "strength": "1mg / 2mg",
@@ -916,6 +959,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "MEBEANCE-XR 200",
+    "slug": "mebeance-xr-200",
     "genericName": "Mebeverine Hydrochloride Prolonged Release Capsules 200mg",
     "composition": "Mebeverine Hydrochloride Prolonged Release Capsules 200mg",
     "strength": "200mg PR",
@@ -935,6 +979,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "ACTOANCE-100",
+    "slug": "actoance-100",
     "genericName": "Acotiamide Tablets 100mg",
     "composition": "Acotiamide Tablets 100mg",
     "strength": "100mg",
@@ -954,6 +999,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "LEVOANCE 25",
+    "slug": "levoance-25",
     "genericName": "Levosulpiride 12.5mg/ml Injection",
     "composition": "Levosulpiride 12.5mg/ml Injection",
     "strength": "12.5mg / ml",
@@ -973,6 +1019,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "VOMIANCE",
+    "slug": "vomiance",
     "genericName": "Ondansetron Injection IP 2mg/ml",
     "composition": "Ondansetron Injection IP 2mg/ml",
     "strength": "2mg / ml (4mg/2ml)",
@@ -993,6 +1040,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "CEDODRINE 2.5",
+    "slug": "cedodrine-2-5",
     "genericName": "Midodrine Hydrochloride USP 2.5mg/5/10mg Tablet",
     "composition": "Midodrine Hydrochloride USP 2.5mg/5/10mg Tablet",
     "strength": "2.5mg / 5mg / 10mg",
@@ -1011,6 +1059,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "HEPABIZ",
+    "slug": "hepabiz",
     "genericName": "L-Ornithine L-Aspartate Infusion 5gm, Silymarin, L-glutathione, Niacinamide & Multi-Vitamin Sachets",
     "composition": "L-Ornithine L-Aspartate Infusion 5gm, Silymarin, L-glutathione, Niacinamide & Multi-Vitamin Sachets",
     "strength": "5gm + Silymarin + Glutathione",
@@ -1031,6 +1080,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "HEPABIZ XT",
+    "slug": "hepabiz-xt",
     "genericName": "L-Leucine, L-Isoleucine & L-Valine (BCAAs) Sachet",
     "composition": "L-Leucine, L-Isoleucine & L-Valine (BCAAs) Sachet",
     "strength": "BCAA Multi-Amino Ratio",
@@ -1050,6 +1100,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "HEPABIZ (Inj.)",
+    "slug": "hepabiz-inj",
     "genericName": "L-Ornithine L-Aspartate Infusion 5gm (10ml)",
     "composition": "L-Ornithine L-Aspartate Infusion 5gm (10ml)",
     "strength": "5gm / 10ml",
@@ -1069,6 +1120,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "URSOANCE",
+    "slug": "ursoance",
     "genericName": "Ursodeoxycholic Acid 300mg/450mg SR Tablets IP",
     "composition": "Ursodeoxycholic Acid 300mg/450mg SR Tablets IP",
     "strength": "300mg / 450mg SR",
@@ -1088,6 +1140,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRSAME",
+    "slug": "torrsame",
     "genericName": "S-Adenosyl-L-Methionine Disulfate Tosylate 400mg Tablets",
     "composition": "S-Adenosyl-L-Methionine Disulfate Tosylate 400mg Tablets",
     "strength": "400mg",
@@ -1107,6 +1160,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "SAFEGUT",
+    "slug": "safegut",
     "genericName": "Pre-Probiotic 15 Billion Capsules, Fructo-oligosaccharides 100mg",
     "composition": "Pre-Probiotic 15 Billion Capsules, Fructo-oligosaccharides 100mg",
     "strength": "15 Billion CFU + 100mg FOS",
@@ -1127,6 +1181,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRPENTA-50",
+    "slug": "torrpenta-50",
     "genericName": "Tapentadol Tablets 50mg",
     "composition": "Tapentadol Tablets 50mg",
     "strength": "50mg",
@@ -1145,6 +1200,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "PARANCE",
+    "slug": "parance",
     "genericName": "Paracetamol Injection 1gm/100ml (I.V.)",
     "composition": "Paracetamol Injection 1gm/100ml (I.V.)",
     "strength": "1gm / 100ml",
@@ -1164,6 +1220,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "VOMIANCE (Inj.)",
+    "slug": "vomiance-inj",
     "genericName": "Ondansetron Injection IP 2mg/ml",
     "composition": "Ondansetron Injection IP 2mg/ml",
     "strength": "2mg / ml",
@@ -1182,6 +1239,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "PREDEANCE 40",
+    "slug": "predeance-40",
     "genericName": "Methylprednisolone Sodium Succinate Injection 40mg",
     "composition": "Methylprednisolone Sodium Succinate Injection 40mg",
     "strength": "40mg",
@@ -1202,6 +1260,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "CORTANCE 100 MG",
+    "slug": "cortance-100-mg",
     "genericName": "Hydrocortisone Sodium Succinate Injection IP 100mg",
     "composition": "Hydrocortisone Sodium Succinate Injection IP 100mg",
     "strength": "100mg",
@@ -1221,6 +1280,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRPARIN",
+    "slug": "torrparin",
     "genericName": "Heparin Sodium Injection IP 5,000 IU/5ml",
     "composition": "Heparin Sodium Injection IP 5,000 IU/5ml",
     "strength": "5,000 IU / 5ml",
@@ -1240,6 +1300,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRPARIN (25,000 IU)",
+    "slug": "torrparin-25-000-iu",
     "genericName": "Heparin Sodium Injection IP 25,000 IU/5ml",
     "composition": "Heparin Sodium Injection IP 25,000 IU/5ml",
     "strength": "25,000 IU / 5ml",
@@ -1259,6 +1320,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TERLIBID",
+    "slug": "terlibid",
     "genericName": "Terlipressin Injection 0.1mg/ml",
     "composition": "Terlipressin Injection 0.1mg/ml",
     "strength": "1mg / 10ml (0.1mg/ml)",
@@ -1278,6 +1340,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "MUCOANCE",
+    "slug": "mucoance",
     "genericName": "Acetylcysteine Injection BP 200mg/ml",
     "composition": "Acetylcysteine Injection BP 200mg/ml",
     "strength": "200mg / ml",
@@ -1297,6 +1360,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "MONTANCE-AD",
+    "slug": "montance-ad",
     "genericName": "Acebrophylline 200mg, Montelukast 10mg, Desloratadine 5mg Tablets",
     "composition": "Acebrophylline 200mg, Montelukast 10mg, Desloratadine 5mg Tablets",
     "strength": "200mg + 10mg + 5mg",
@@ -1316,6 +1380,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "RENOANCE",
+    "slug": "renoance",
     "genericName": "N-Acetylcysteine 150mg & Taurine 500mg Tablets",
     "composition": "N-Acetylcysteine 150mg & Taurine 500mg Tablets",
     "strength": "150mg + 500mg",
@@ -1335,6 +1400,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "GLUTANCE (Injection)",
+    "slug": "glutance-injection",
     "genericName": "Glutathione for Injection 600mg",
     "composition": "Glutathione for Injection 600mg",
     "strength": "600mg",
@@ -1353,6 +1419,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "GLUTANCE TABLET",
+    "slug": "glutance-tablet",
     "genericName": "Glutathione 500mg Tablets",
     "composition": "Glutathione 500mg Tablets",
     "strength": "500mg",
@@ -1372,6 +1439,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "GLUTANCE SACHET",
+    "slug": "glutance-sachet",
     "genericName": "L-Glutamine 10g, Zinc Sulphate 3.3mg, Selenium 40mcg",
     "composition": "L-Glutamine 10g, Zinc Sulphate 3.3mg, Selenium 40mcg",
     "strength": "10g + 3.3mg + 40mcg",
@@ -1391,6 +1459,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "AZOANCE-50",
+    "slug": "azoance-50",
     "genericName": "Azathioprine Tablets I.P. 50mg",
     "composition": "Azathioprine Tablets I.P. 50mg",
     "strength": "50mg",
@@ -1410,6 +1479,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "CADZIM",
+    "slug": "cadzim",
     "genericName": "Calcium Citrate Maleate 500mg, Vitamin D3 200 IU, Zinc Oxide 7.5mg, Magnesium Oxide 50mg Softgels",
     "composition": "Calcium Citrate Maleate 500mg, Vitamin D3 200 IU, Zinc Oxide 7.5mg, Magnesium Oxide 50mg, Soft Gelatin Capsules",
     "strength": "500mg + 200 IU",
@@ -1429,6 +1499,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRZINC Syrup",
+    "slug": "torrzinc-syrup",
     "genericName": "Vitamin A, Cholecalciferol, Cyanocobalamin, Vitamin E, Vitamin C, Zinc Sulphate",
     "composition": "Vitamin A, Cholecalciferol, Cyanocobalamin, Vitamin E, Vitamin C, Zinc Sulphate",
     "strength": "Multivitamin + Zinc",
@@ -1448,6 +1519,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "COGNITOR",
+    "slug": "cognitor",
     "genericName": "L-Carnosine 200mg + DHA 125mg/5ml",
     "composition": "L-Carnosine 200mg + DHA 125mg/5ml",
     "strength": "200mg + 125mg",
@@ -1467,6 +1539,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "ALBUANCE",
+    "slug": "albuance",
     "genericName": "DHA, with Vitamins, Minerals & Zinc",
     "composition": "DHA, with Vitamins, Minerals & Zinc",
     "strength": "DHA Micronutrient Complex",
@@ -1485,6 +1558,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORRBEST TAB",
+    "slug": "torrbest-tab",
     "genericName": "Methylcobalamin 1500mcg, Alpha Lipoic Acid 200mg, Benfotiamine 200mg, Folic Acid, Chromium, Pyridoxine HCl",
     "composition": "Methylcobalamin 1500mcg, Alpha Lipoic Acid 200mg, Benfotiamine 200mg, Folic Acid, Chromium, Pyridoxine HCl",
     "strength": "1500mcg + 200mg",
@@ -1504,6 +1578,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "Q-ANCE",
+    "slug": "q-ance",
     "genericName": "CO-Enzyme Q10 100mg, Lycopene 10% 5000mcg, Omega-3 Fatty Acids, Cyanocobalamin, L-Arginine, Selenium",
     "composition": "CO-Enzyme Q10 100mg, Lycopene 10% 5000mcg, Omega-3 Fatty Acids, Cyanocobalamin, L-Arginine, Selenium",
     "strength": "100mg CoQ10 Complex",
@@ -1523,6 +1598,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "VITMIN-8",
+    "slug": "vitmin-8",
     "genericName": "Folic Acid, Methylcobalamin, Biotin, Calcium Pantothenate & Vitamins Tablets",
     "composition": "Folic Acid, Methylcobalamin, Biotin, Calcium Pantothenate & Vitamins Tablets",
     "strength": "Essential 8 B-Vitamins",
@@ -1543,6 +1619,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "ALCOANCE TAB.",
+    "slug": "alcoance-tab",
     "genericName": "Thiamine Hydrochloride 250mg, Riboflavin 4mg & Pyridoxine Hydrochloride 50mg Tablets",
     "composition": "Thiamine Hydrochloride 250mg, Riboflavin 4mg & Pyridoxine Hydrochloride 50mg Tablets",
     "strength": "250mg + 4mg + 50mg",
@@ -1562,6 +1639,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "ALCOANCE KIT",
+    "slug": "alcoance-kit",
     "genericName": "Thiamine HCL, Riboflavin & Pyridoxine Injection + Ascorbic Acid + Dextrose Injection",
     "composition": "Thiamine HCL, Riboflavin & Pyridoxine Injection + Ascorbic Acid + Dextrose Injection",
     "strength": "Therapeutic Parenteral Kit",
@@ -1581,6 +1659,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "TORBAL-1500",
+    "slug": "torbal-1500",
     "genericName": "Methylcobalamin Injection 1500mcg",
     "composition": "Methylcobalamin Injection 1500mcg",
     "strength": "1500mcg / 2ml",
@@ -1600,6 +1679,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     "brandName": "KETOANCE",
+    "slug": "ketoance",
     "genericName": "Alpha Ketoanalogues & Essential Amino Acids Tablets",
     "composition": "Alpha Ketoanalogues & Essential Amino Acids Tablets",
     "strength": "Standard Alpha Keto-Acid Formula",

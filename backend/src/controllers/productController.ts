@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { ProductModel } from '../models/Product.js';
 import { CategoryModel } from '../models/Category.js';
+
+function slugify(str: string): string {
+  return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
 
 export const getProducts = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -33,6 +38,7 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
         { brandName: searchRegex },
         { genericName: searchRegex },
         { composition: searchRegex },
+        { strength: searchRegex },
       ];
     }
 
@@ -52,7 +58,17 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
 
 export const getProductById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const product = await ProductModel.findById(req.params.id).populate('category', 'name slug icon');
+    const identifier = req.params.id as string;
+    let product = null;
+
+    if (mongoose.Types.ObjectId.isValid(identifier)) {
+      product = await ProductModel.findById(identifier).populate('category', 'name slug icon');
+    }
+
+    if (!product) {
+      product = await ProductModel.findOne({ slug: identifier }).populate('category', 'name slug icon');
+    }
+
     if (!product) {
       res.status(404).json({ success: false, message: 'Product not found.' });
       return;
@@ -69,7 +85,17 @@ export const getProductById = async (req: Request, res: Response): Promise<void>
 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const newProduct = await ProductModel.create(req.body);
+    const payload = { ...req.body };
+    if (!payload.slug && payload.brandName) {
+      let baseSlug = slugify(payload.brandName);
+      const existing = await ProductModel.findOne({ slug: baseSlug });
+      if (existing) {
+        baseSlug = slugify(`${payload.brandName}-${payload.strength || payload.dosageForm}`);
+      }
+      payload.slug = baseSlug;
+    }
+
+    const newProduct = await ProductModel.create(payload);
     const populated = await newProduct.populate('category', 'name slug icon');
     res.status(201).json({
       success: true,
@@ -83,9 +109,14 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
 
 export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
+    const payload = { ...req.body };
+    if (!payload.slug && payload.brandName) {
+      payload.slug = slugify(payload.brandName);
+    }
+
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      payload,
       { new: true, runValidators: true }
     ).populate('category', 'name slug icon');
 

@@ -21,9 +21,58 @@ export const ProductDetail: React.FC = () => {
       const data = await ProductService.getProductById(id);
       setProduct(data);
       setLoading(false);
+
+      if (data) {
+        // Dynamic Title & Meta Description
+        document.title = `${data.brandName} (${data.strength}) - ${data.genericName} | Torrance Life Science Pvt. Ltd.`;
+        
+        let metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute('content', `${data.brandName} (${data.genericName}) - ${data.composition}. ${data.description}`);
+        }
+
+        // Canonical URL
+        let canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) {
+          canonical.setAttribute('href', `https://torancelifescience.com/products/${data.slug || data._id}`);
+        }
+
+        // Inject Product Medical JSON-LD
+        let script = document.getElementById('product-jsonld');
+        if (!script) {
+          script = document.createElement('script');
+          script.id = 'product-jsonld';
+          script.setAttribute('type', 'application/ld+json');
+          document.head.appendChild(script);
+        }
+
+        const catName = typeof data.category === 'object' ? data.category.name : data.category;
+
+        script.textContent = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'MedicalWebPage',
+          'name': `${data.brandName} - Torrance Life Science`,
+          'headline': `${data.brandName} (${data.genericName})`,
+          'description': data.description,
+          'url': `https://torancelifescience.com/products/${data.slug || data._id}`,
+          'about': {
+            '@type': 'Drug',
+            'name': data.brandName,
+            'activeIngredient': data.genericName,
+            'dosageForm': data.dosageForm,
+            'strength': data.strength,
+            'category': catName
+          }
+        });
+      }
     };
 
     fetchProduct();
+
+    return () => {
+      const script = document.getElementById('product-jsonld');
+      if (script) script.remove();
+    };
   }, [id]);
 
   const handleShare = () => {

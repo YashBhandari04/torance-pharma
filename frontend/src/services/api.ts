@@ -51,12 +51,12 @@ export const ProductService = {
     }
   },
 
-  async getProductById(id: string): Promise<Product | null> {
+  async getProductById(identifier: string): Promise<Product | null> {
     try {
-      const response = await api.get(`/products/${id}`);
+      const response = await api.get(`/products/${identifier}`);
       return response.data.data;
     } catch {
-      return PRODUCTS.find(p => p._id === id) || null;
+      return PRODUCTS.find(p => p._id === identifier || p.slug === identifier) || null;
     }
   },
 

@@ -25,6 +25,7 @@ export interface Category {
 export interface Product {
   _id: string;
   brandName: string;
+  slug?: string;
   genericName: string;
   composition: string;
   strength: string;

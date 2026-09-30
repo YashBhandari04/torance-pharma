@@ -46,6 +46,7 @@ const seed = async () => {
       }
       return {
         brandName: p.brandName,
+        slug: p.slug,
         genericName: p.genericName,
         composition: p.composition,
         strength: p.strength,

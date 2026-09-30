@@ -278,7 +278,7 @@ export const Products: React.FC = () => {
                       </div>
 
                       <Link
-                        to={`/products/${product._id}`}
+                        to={`/products/${product.slug || product._id}`}
                         className="w-full inline-flex items-center justify-center py-2.5 rounded-xl bg-slate-900 hover:bg-sky-600 text-white font-semibold text-xs transition-colors duration-200"
                       >
                         <span>View Specifications & Sample</span>
