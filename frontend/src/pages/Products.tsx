@@ -45,14 +45,15 @@ export const Products: React.FC = () => {
     fetchData();
   }, [selectedCategory, selectedDosage, searchQuery]);
 
-  // Sync URL search params
-  const handleCategoryChange = (slug: string) => {
+  // Sync URL search params without scrolling page
+  const handleCategoryChange = (e: React.MouseEvent | null, slug: string) => {
+    if (e) e.preventDefault();
     setSelectedCategory(slug);
     setCurrentPage(1);
     const newParams = new URLSearchParams(searchParams);
     if (slug === 'all') newParams.delete('category');
     else newParams.set('category', slug);
-    setSearchParams(newParams);
+    setSearchParams(newParams, { preventScrollReset: true });
   };
 
   const handleSearchChange = (query: string) => {
@@ -61,14 +62,15 @@ export const Products: React.FC = () => {
     const newParams = new URLSearchParams(searchParams);
     if (!query) newParams.delete('search');
     else newParams.set('search', query);
-    setSearchParams(newParams);
+    setSearchParams(newParams, { preventScrollReset: true });
   };
 
-  const resetFilters = () => {
+  const resetFilters = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     setSelectedCategory('all');
     setSelectedDosage('all');
     setSearchQuery('');
-    setSearchParams({});
+    setSearchParams({}, { preventScrollReset: true });
     setCurrentPage(1);
   };
 
@@ -157,7 +159,8 @@ export const Products: React.FC = () => {
           {/* Therapeutic Category Pills */}
           <div className="pt-2 flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
             <button
-              onClick={() => handleCategoryChange('all')}
+              type="button"
+              onClick={(e) => handleCategoryChange(e, 'all')}
               className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === 'all'
                   ? 'bg-slate-900 text-white shadow-md'
@@ -170,7 +173,8 @@ export const Products: React.FC = () => {
             {categories.map((cat) => (
               <button
                 key={cat._id}
-                onClick={() => handleCategoryChange(cat.slug)}
+                type="button"
+                onClick={(e) => handleCategoryChange(e, cat.slug)}
                 className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                   selectedCategory === cat.slug
                     ? 'bg-sky-600 text-white shadow-md'

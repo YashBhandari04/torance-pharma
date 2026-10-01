@@ -296,7 +296,10 @@ export const Contact: React.FC = () => {
                     <button
                       key={type}
                       type="button"
-                      onClick={() => setEnquiryType(type)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEnquiryType(type);
+                      }}
                       className={`py-2.5 px-3 rounded-xl text-xs font-semibold transition-all ${
                         enquiryType === type
                           ? 'bg-sky-600 text-white shadow-sm'
