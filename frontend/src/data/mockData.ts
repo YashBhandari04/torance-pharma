@@ -17,7 +17,7 @@ export const COMPANY_INFO = {
     board: '+91 (079) 4900-5800',
     sales: '+91 98765-43210',
     support: '+91 98765-43211',
-    whatsapp: '+91 98765-43210'
+    whatsapp: '+91 81023-43062'
   },
   certifications: [
     'WHO-GMP Certified Manufacturing',
