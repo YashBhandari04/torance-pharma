@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   Pill, ShieldCheck, ArrowLeft, Building2, 
-  CheckCircle2, AlertCircle, FileText, Share2, Mail, Clock
+  CheckCircle2, AlertCircle, FileText, Share2, Mail, Clock, MessageSquare
 } from 'lucide-react';
 import { ProductService } from '../services/api';
 import { Product } from '../types';
+import { COMPANY_INFO } from '../data/mockData';
 
 export const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -79,6 +80,19 @@ export const ProductDetail: React.FC = () => {
     navigator.clipboard.writeText(window.location.href);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handleWhatsAppInquiry = () => {
+    if (!product) return;
+    const rawNumber = import.meta.env.VITE_WHATSAPP_NUMBER 
+      || COMPANY_INFO.phone?.whatsapp 
+      || COMPANY_INFO.phone?.sales 
+      || '+919876543210';
+    const cleanPhone = rawNumber.replace(/[^0-9]/g, '');
+
+    const message = `Hello Torrance Life Science Team! 👋\n\nI want to inquire about the following formulation:\n• Product Name: ${product.brandName}\n• Composition: ${product.composition}\n• Strength: ${product.strength}\n• Dosage Form: ${product.dosageForm}\n• Packaging: ${product.packaging}\n\nPlease share availability, minimum order quantity, and PCD franchise / distribution pricing.`;
+
+    window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   if (loading) {
@@ -243,19 +257,31 @@ export const ProductDetail: React.FC = () => {
 
             {/* Business Call to Action */}
             <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={handleWhatsAppInquiry}
+                className="flex-1 inline-flex items-center justify-center py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-md transition-all duration-200"
+              >
+                <svg className="w-4 h-4 mr-2 fill-white" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.099 4.017 4.142-1.084z"/>
+                </svg>
+                <span>Inquire on WhatsApp</span>
+              </button>
+
               <Link
                 to={`/contact?product=${encodeURIComponent(product.brandName)}`}
-                className="flex-1 inline-flex items-center justify-center py-3.5 px-6 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm shadow-md transition-all duration-200"
+                className="inline-flex items-center justify-center py-3.5 px-6 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm shadow-md transition-all duration-200"
               >
                 <Mail className="w-4 h-4 mr-2" />
-                <span>Request Commercial Sample / Quote</span>
+                <span>Email Quote</span>
               </Link>
+
               <Link
                 to="/contact"
                 className="inline-flex items-center justify-center py-3.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition-colors"
               >
                 <Building2 className="w-4 h-4 mr-2 text-sky-400" />
-                <span>PCD Franchise Inquiry</span>
+                <span>Franchise</span>
               </Link>
             </div>
 

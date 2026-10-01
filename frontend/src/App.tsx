@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
+import { WhatsAppWidget } from './components/common/WhatsAppWidget';
 
 // Public Pages
 import { Home } from './pages/Home';
@@ -31,6 +32,7 @@ const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     <Navbar />
     <main className="flex-grow">{children}</main>
     <Footer />
+    <WhatsAppWidget />
   </div>
 );
 
