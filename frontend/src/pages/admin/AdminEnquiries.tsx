@@ -105,6 +105,15 @@ export const AdminEnquiries: React.FC = () => {
                     <span className="px-2.5 py-1 rounded bg-sky-950 text-sky-300 border border-sky-800/50 text-[10px] font-bold">
                       {enq.enquiryType}
                     </span>
+                    {enq.emailStatus && (
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${
+                        enq.emailStatus === 'sent' ? 'bg-emerald-950 text-emerald-300 border-emerald-800' :
+                        enq.emailStatus === 'failed' ? 'bg-red-950 text-red-300 border-red-800' :
+                        'bg-amber-950 text-amber-300 border-amber-800'
+                      }`}>
+                        Mail: {enq.emailStatus.toUpperCase()}
+                      </span>
+                    )}
                     <h3 className="text-base font-bold text-white">{enq.fullName}</h3>
                     {enq.companyName && (
                       <span className="text-xs text-slate-400 font-normal">• {enq.companyName}</span>

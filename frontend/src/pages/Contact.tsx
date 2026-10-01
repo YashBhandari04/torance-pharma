@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { 
   Building2, Mail, Phone, MapPin, Send, 
-  CheckCircle2, ShieldCheck, Clock, MessageSquareText 
+  CheckCircle2, AlertCircle, Clock, Loader2 
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/mockData';
 import { EnquiryService } from '../services/api';
@@ -29,39 +29,98 @@ export const Contact: React.FC = () => {
       : ''
   );
 
+  // Anti-spam Honeypot field (Hidden from human users)
+  const [honeypot, setHoneypot] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setStatusMessage(null);
 
-    const res = await EnquiryService.submitEnquiry({
-      fullName,
-      email,
-      phone,
-      companyName,
-      enquiryType,
-      city,
-      state,
-      country,
-      message,
-    });
+    // 1. Client-Side Validation
+    const cleanName = fullName.trim();
+    if (!cleanName || cleanName.length < 2) {
+      setStatusMessage({ type: 'error', text: 'Please enter your full name (at least 2 characters).' });
+      return;
+    }
 
-    setLoading(false);
-    if (res.success) {
-      setStatusMessage({ type: 'success', text: res.message });
-      // Reset form fields
-      setFullName('');
-      setEmail('');
-      setPhone('');
-      setCompanyName('');
-      setCity('');
-      setState('');
-      setMessage('');
-    } else {
-      setStatusMessage({ type: 'error', text: 'Failed to submit enquiry. Please check fields or try again.' });
+    const cleanEmail = email.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
+      setStatusMessage({ type: 'error', text: 'Please enter a valid email address (e.g. name@company.com).' });
+      return;
+    }
+
+    const cleanPhone = phone.trim();
+    const digitsOnly = cleanPhone.replace(/[^0-9]/g, '');
+    if (!cleanPhone || digitsOnly.length < 8) {
+      setStatusMessage({ type: 'error', text: 'Please enter a valid phone / WhatsApp number (at least 8 digits).' });
+      return;
+    }
+
+    const cleanCity = city.trim();
+    if (!cleanCity || cleanCity.length < 2) {
+      setStatusMessage({ type: 'error', text: 'Please enter your city name.' });
+      return;
+    }
+
+    const cleanMsg = message.trim();
+    if (!cleanMsg || cleanMsg.length < 5) {
+      setStatusMessage({ type: 'error', text: 'Please provide detailed inquiry message (at least 5 characters).' });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // 2. Submit to Backend API via POST
+      const res = await EnquiryService.submitEnquiry({
+        fullName: cleanName,
+        email: cleanEmail,
+        phone: cleanPhone,
+        companyName: companyName.trim(),
+        enquiryType,
+        city: cleanCity,
+        state: state.trim(),
+        country: country.trim() || 'India',
+        message: cleanMsg,
+        website: honeypot // Anti-spam bot trap
+      } as any);
+
+      setLoading(false);
+
+      if (res.success) {
+        // Show exact success text required
+        setStatusMessage({ 
+          type: 'success', 
+          text: res.message || 'Your enquiry has been submitted successfully. Our team will contact you shortly.' 
+        });
+
+        // Clear form fields ONLY on successful backend submission
+        setFullName('');
+        setEmail('');
+        setPhone('');
+        setCompanyName('');
+        setCity('');
+        setState('');
+        setMessage('');
+        setHoneypot('');
+      } else {
+        // Preserve user entered data on error
+        setStatusMessage({ 
+          type: 'error', 
+          text: res.message || 'Unable to submit your enquiry right now. Please try again later.' 
+        });
+      }
+    } catch {
+      setLoading(false);
+      // Preserve user entered data on network/API failure
+      setStatusMessage({ 
+        type: 'error', 
+        text: 'Unable to submit your enquiry right now. Please try again later.' 
+      });
     }
   };
 
@@ -72,22 +131,22 @@ export const Contact: React.FC = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-semibold">
-            B2B Business Communication
+            Corporate Trade Desk
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Contact & Trade Enquiries
+            Contact & Business Enquiries
           </h1>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-            Connect with our sales board for PCD franchise distribution rights, hospital procurement contracts, and strategic pharma alliances.
+            Submit your commercial inquiry below. Every submission is assigned directly to our executive commercial management team.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Company Contact & Office Details */}
+          {/* Left Column: Corporate Office Details */}
           <div className="lg:col-span-5 space-y-6">
             
-            {/* Company Contact Card - Key Management Profile */}
+            {/* Key Contact Card */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl space-y-5">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 className="font-extrabold text-lg text-slate-900 flex items-center space-x-2">
@@ -140,15 +199,15 @@ export const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Company Address Card */}
+            {/* Registered Office Card */}
             <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white shadow-xl space-y-4">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold shrink-0">
                   <Building2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-lg text-white">Company Address</h3>
-                  <span className="text-xs text-sky-400 font-medium">Registered Office</span>
+                  <h3 className="font-extrabold text-lg text-white">Registered Address</h3>
+                  <span className="text-xs text-sky-400 font-medium">Corporate Headquarters</span>
                 </div>
               </div>
 
@@ -171,7 +230,7 @@ export const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Commercial Support Hours */}
+            {/* Support Hours */}
             <div className="p-6 rounded-2xl bg-sky-50 border border-sky-200 text-xs text-sky-900 space-y-2">
               <div className="flex items-center space-x-2 font-bold">
                 <Clock className="w-4 h-4 text-sky-600" />
@@ -179,7 +238,7 @@ export const Contact: React.FC = () => {
               </div>
               <p className="text-sky-800">
                 Monday – Saturday: 9:00 AM – 6:30 PM (IST)<br />
-                Direct Sales Line: {COMPANY_INFO.phone.sales}
+                Direct Sales Desk: {COMPANY_INFO.phone.sales}
               </p>
             </div>
 
@@ -189,27 +248,44 @@ export const Contact: React.FC = () => {
           <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-6">
             
             <div className="space-y-2 border-b border-slate-100 pb-4">
-              <h2 className="text-2xl font-bold text-slate-900">Submit Business Enquiry</h2>
+              <h2 className="text-2xl font-bold text-slate-900">Transmit Business Enquiry</h2>
               <p className="text-xs text-slate-500">
-                Select your enquiry type below. All inquiries are assigned directly to regional commercial directors.
+                Fill out the required information below. Any legitimate visitor, distributor, hospital, or trade partner can submit an inquiry.
               </p>
             </div>
 
+            {/* Status Alert Banner */}
             {statusMessage && (
               <div
-                className={`p-4 rounded-xl text-xs font-semibold flex items-center space-x-2 ${
+                className={`p-4 rounded-xl text-xs font-semibold flex items-center space-x-3.5 transition-all ${
                   statusMessage.type === 'success'
-                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                    : 'bg-red-50 text-red-800 border border-red-200'
+                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300'
+                    : 'bg-red-50 text-red-900 border border-red-300'
                 }`}
               >
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                {statusMessage.type === 'success' ? (
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                ) : (
+                  <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
+                )}
                 <span>{statusMessage.text}</span>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               
+              {/* Anti-spam Honeypot (Hidden from Humans) */}
+              <input
+                type="text"
+                name="website"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden absolute left-[-9999px]"
+                aria-hidden="true"
+              />
+
               {/* Enquiry Type Selector Tabs */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
@@ -221,7 +297,7 @@ export const Contact: React.FC = () => {
                       key={type}
                       type="button"
                       onClick={() => setEnquiryType(type)}
-                      className={`py-2 px-3 rounded-xl text-xs font-semibold transition-all ${
+                      className={`py-2.5 px-3 rounded-xl text-xs font-semibold transition-all ${
                         enquiryType === type
                           ? 'bg-sky-600 text-white shadow-sm'
                           : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -240,10 +316,10 @@ export const Contact: React.FC = () => {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Dr. Rajesh Sharma"
+                    placeholder="e.g. Rahul Sharma"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500"
+                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500 focus:bg-white text-slate-900"
                   />
                 </div>
 
@@ -255,7 +331,7 @@ export const Contact: React.FC = () => {
                     placeholder="name@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500"
+                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500 focus:bg-white text-slate-900"
                   />
                 </div>
               </div>
@@ -269,7 +345,7 @@ export const Contact: React.FC = () => {
                     placeholder="+91 98765 43210"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500"
+                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500 focus:bg-white text-slate-900"
                   />
                 </div>
 
@@ -280,7 +356,7 @@ export const Contact: React.FC = () => {
                     placeholder="e.g. Apollo Pharma Distributors"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500"
+                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500 focus:bg-white text-slate-900"
                   />
                 </div>
               </div>
@@ -294,7 +370,7 @@ export const Contact: React.FC = () => {
                     placeholder="Ahmedabad"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500"
+                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500 focus:bg-white text-slate-900"
                   />
                 </div>
 
@@ -305,7 +381,7 @@ export const Contact: React.FC = () => {
                     placeholder="Gujarat"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
-                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500"
+                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500 focus:bg-white text-slate-900"
                   />
                 </div>
 
@@ -315,7 +391,7 @@ export const Contact: React.FC = () => {
                     type="text"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500"
+                    className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500 focus:bg-white text-slate-900"
                   />
                 </div>
               </div>
@@ -328,7 +404,7 @@ export const Contact: React.FC = () => {
                   placeholder="Provide details regarding territory requirements, expected order volumes, or specific medicine formulations..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500"
+                  className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-sky-500 focus:bg-white text-slate-900 resize-none"
                 />
               </div>
 
@@ -336,10 +412,13 @@ export const Contact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-4 rounded-xl bg-slate-900 hover:bg-sky-600 text-white font-bold text-xs transition-colors duration-200 shadow-md flex items-center justify-center space-x-2"
+                  className="w-full py-4 rounded-xl bg-slate-900 hover:bg-sky-600 disabled:opacity-50 text-white font-bold text-xs transition-colors duration-200 shadow-md flex items-center justify-center space-x-2"
                 >
                   {loading ? (
-                    <span>Processing Submission...</span>
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-sky-400" />
+                      <span>Sending Enquiry...</span>
+                    </>
                   ) : (
                     <>
                       <Send className="w-4 h-4 text-sky-400" />

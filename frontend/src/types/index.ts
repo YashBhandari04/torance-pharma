@@ -55,6 +55,7 @@ export interface Enquiry {
   country: string;
   message: string;
   status: EnquiryStatus;
+  emailStatus?: 'pending' | 'sent' | 'failed';
   createdAt: string;
 }
 

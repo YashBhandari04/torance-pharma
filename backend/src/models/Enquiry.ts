@@ -11,7 +11,9 @@ export interface IEnquiry extends Document {
   country: string;
   message: string;
   status: 'NEW' | 'IN_PROGRESS' | 'CONTACTED' | 'CLOSED';
+  emailStatus: 'pending' | 'sent' | 'failed';
   createdAt: Date;
+  updatedAt: Date;
 }
 
 const EnquirySchema: Schema = new Schema(
@@ -28,12 +30,17 @@ const EnquirySchema: Schema = new Schema(
     city: { type: String, required: true, trim: true },
     state: { type: String, trim: true },
     country: { type: String, default: 'India' },
-    message: { type: String, required: true },
+    message: { type: String, required: true, trim: true },
     status: { 
       type: String, 
       enum: ['NEW', 'IN_PROGRESS', 'CONTACTED', 'CLOSED'], 
       default: 'NEW' 
     },
+    emailStatus: {
+      type: String,
+      enum: ['pending', 'sent', 'failed'],
+      default: 'pending'
+    }
   },
   { timestamps: true }
 );
