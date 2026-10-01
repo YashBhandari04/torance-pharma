@@ -16,6 +16,7 @@ export const ProductDetail: React.FC = () => {
   const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchProduct = async () => {
       if (!id) return;
       setLoading(true);

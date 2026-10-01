@@ -1,9 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { WhatsAppWidget } from './components/common/WhatsAppWidget';
+
+// ScrollToTop Helper Component for Route Navigation
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 // Public Pages
 import { Home } from './pages/Home';
@@ -40,6 +51,7 @@ export const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           {/* Public Website Routes */}
           <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
