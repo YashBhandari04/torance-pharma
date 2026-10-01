@@ -31,3 +31,13 @@ export const enquiryZodSchema = z.object({
   country: z.string().optional(),
   message: z.string().min(10, 'Inquiry message must be at least 10 characters.'),
 });
+
+export const contactZodSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters.').max(100, 'Name is too long.'),
+  email: z.string().email('Please enter a valid email address.').max(150, 'Email address is too long.'),
+  subject: z.string().min(2, 'Subject must be at least 2 characters.').max(200, 'Subject is too long.'),
+  message: z.string().min(5, 'Message must be at least 5 characters.').max(5000, 'Message is too long.'),
+  phone: z.string().max(50, 'Phone number is too long.').optional(),
+  website: z.string().optional(),
+  fax: z.string().optional()
+});

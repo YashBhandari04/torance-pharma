@@ -111,3 +111,31 @@ export const CareerService = {
     }
   }
 };
+
+export const ContactService = {
+  async sendContactMessage(contactData: {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    phone?: string;
+    website?: string;
+    fax?: string;
+  }): Promise<{ success: boolean; message: string }> {
+    try {
+      const response = await api.post('/contact', contactData);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        return {
+          success: false,
+          message: error.response.data.message
+        };
+      }
+      return {
+        success: false,
+        message: 'Unable to send your message. Please try again later.'
+      };
+    }
+  }
+};
