@@ -167,17 +167,6 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
                     )}
                   </button>
                 </form>
-
-                <div className="pt-2 text-center">
-                  <button
-                    type="button"
-                    onClick={handleExternalWhatsApp}
-                    className="inline-flex items-center text-[11px] text-slate-500 hover:text-emerald-700 font-medium transition-colors"
-                  >
-                    <span>Or open external WhatsApp app</span>
-                    <ExternalLink className="w-3 h-3 ml-1" />
-                  </button>
-                </div>
               </>
             )}
           </div>

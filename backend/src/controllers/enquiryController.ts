@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { EnquiryModel } from '../models/Enquiry.js';
 import { sendEnquiryNotificationEmail } from '../utils/emailSender.js';
+import { sendWhatsAppToManager } from '../utils/whatsappSender.js';
 
 export const createEnquiry = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -11,6 +12,11 @@ export const createEnquiry = async (req: Request, res: Response): Promise<void> 
     // Dispatch business notification email asynchronously
     sendEnquiryNotificationEmail(newEnquiry).catch(err => {
       console.warn('[Email Warning]:', err.message);
+    });
+
+    // Dispatch direct WhatsApp alert to Manager asynchronously (without exposing manager number on client)
+    sendWhatsAppToManager(newEnquiry).catch(err => {
+      console.warn('[WhatsApp Warning]:', err.message);
     });
 
     res.status(201).json({
