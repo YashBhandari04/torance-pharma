@@ -6,10 +6,12 @@ import { validateBody, enquiryZodSchema } from '../middleware/validateMiddleware
 
 const router = Router();
 
-// Rate limiter for enquiry submissions (5 per 15 minutes per IP)
+// Rate limiter for enquiry submissions (25 per 15 minutes per IP)
 const enquiryPostLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: 25,
+  standardHeaders: true,
+  legacyHeaders: false,
   message: {
     success: false,
     message: 'Too many enquiry submissions from this IP. Please try again after 15 minutes.'

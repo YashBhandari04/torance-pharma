@@ -24,15 +24,20 @@ export const sendEnquiryNotificationEmail = async (enquiry: IEnquiry): Promise<b
       return false;
     }
 
-    // Create Nodemailer Transporter
+    // Create Nodemailer Transporter with robust TLS and timeout settings
     const transporter = nodemailer.createTransport({
       host,
       port,
       secure: port === 465,
       auth: {
         user,
-        pass,
+        pass: pass.replace(/\s+/g, ''),
       },
+      tls: {
+        rejectUnauthorized: false
+      },
+      connectionTimeout: 10000,
+      socketTimeout: 10000
     });
 
     const formattedDate = new Date(enquiry.createdAt || Date.now()).toLocaleString('en-IN', {

@@ -5,10 +5,12 @@ import { validateBody, contactZodSchema } from '../middleware/validateMiddleware
 
 const router = Router();
 
-// Rate Limiter specifically for public contact form (5 submissions per 15 mins per IP)
+// Rate Limiter specifically for public contact form (25 submissions per 15 mins per IP)
 const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: 25,
+  standardHeaders: true,
+  legacyHeaders: false,
   message: {
     success: false,
     message: 'Too many contact requests from this IP. Please try again after 15 minutes.'
