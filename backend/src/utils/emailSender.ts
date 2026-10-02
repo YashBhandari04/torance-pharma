@@ -52,16 +52,14 @@ export const sendEnquiryNotificationEmail = async (enquiry: IEnquiry): Promise<b
       replyTo: enquiry.email,
       subject: `New Business Enquiry - ${enquiry.enquiryType} - ${enquiry.fullName}`,
       html: `
-        <div style="font-family: Arial, sans-serif; color: #0F172A; max-width: 650px; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        <div style="font-family: Arial, sans-serif; color: #0F172A; max-width: 650px; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin: 0 auto;">
           
-          {/* Header */}
           <div style="background-color: #0F172A; padding: 24px; color: white; text-align: center; border-bottom: 4px solid #0284C7;">
-            <h2 style="margin: 0; font-size: 22px; tracking-tight: uppercase; letter-spacing: 1px;">TORRANCE LIFE SCIENCE PVT. LTD.</h2>
+            <h2 style="margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px;">TORRANCE LIFE SCIENCE PVT. LTD.</h2>
             <p style="margin: 6px 0 0; font-size: 13px; color: #38BDF8; font-weight: bold;">OFFICIAL BUSINESS ENQUIRY NOTIFICATION</p>
           </div>
 
-          {/* Details Body */}
-          <div style="padding: 28px; bg-white;">
+          <div style="padding: 28px; background-color: #FFFFFF;">
             <div style="margin-bottom: 20px; padding: 12px 16px; background-color: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 8px; color: #0369A1; font-size: 13px; font-weight: bold;">
               📩 Category: ${enquiry.enquiryType} Segment Inquiry
             </div>
@@ -97,17 +95,15 @@ export const sendEnquiryNotificationEmail = async (enquiry: IEnquiry): Promise<b
               </tr>
             </table>
 
-            {/* Message Box */}
             <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-left: 4px solid #0284C7; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
               <h4 style="margin: 0 0 8px; color: #475569; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Inquiry Message:</h4>
-              <p style="margin: 0; font-size: 14px; color: #0F172A; leading-relaxed: true; white-space: pre-wrap;">${enquiry.message}</p>
+              <p style="margin: 0; font-size: 14px; color: #0F172A; line-height: 1.6; white-space: pre-wrap;">${enquiry.message}</p>
             </div>
 
-            {/* Direct Reply CTA Button */}
             <div style="text-align: center; padding-top: 12px;">
               <a 
                 href="mailto:${enquiry.email}?subject=Re: New Business Enquiry - ${encodeURIComponent(enquiry.enquiryType)}"
-                style="display: inline-block; padding: 14px 28px; background-color: #0284C7; color: white; text-decoration: none; font-weight: bold; font-size: 14px; border-radius: 10px; shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                style="display: inline-block; padding: 14px 28px; background-color: #0284C7; color: white; text-decoration: none; font-weight: bold; font-size: 14px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
               >
                 ✉️ Reply to Customer (${enquiry.email})
               </a>
@@ -115,7 +111,6 @@ export const sendEnquiryNotificationEmail = async (enquiry: IEnquiry): Promise<b
 
           </div>
 
-          {/* Footer */}
           <div style="background-color: #F8FAFC; padding: 16px; border-top: 1px solid #E2E8F0; font-size: 11px; color: #64748B; text-align: center;">
             Official Corporate Automated Notification • Torrance Life Science Pvt. Ltd.
           </div>

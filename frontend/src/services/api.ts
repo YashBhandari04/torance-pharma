@@ -91,11 +91,16 @@ export const EnquiryService = {
     try {
       const response = await api.post('/enquiries', enquiryData);
       return response.data;
-    } catch {
-      // Return simulated success if backend server is not running yet
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        return {
+          success: false,
+          message: error.response.data.message
+        };
+      }
       return {
-        success: true,
-        message: 'Your enquiry has been received successfully. Our business team will reach out within 24 hours.'
+        success: false,
+        message: 'Unable to submit your enquiry right now. Please try again later.'
       };
     }
   }
