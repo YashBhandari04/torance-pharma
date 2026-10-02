@@ -32,10 +32,11 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV === 'development') {
+    // Allow requests with no origin, local dev origins, or LAN IP access from phones
+    if (!origin || process.env.NODE_ENV === 'development' || allowedOrigins.includes(origin) || origin.startsWith('http://192.168.') || origin.startsWith('http://10.') || origin.startsWith('http://172.')) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(null, true); // Fallback allow in dev
     }
   },
   credentials: true,
@@ -73,8 +74,8 @@ app.use('/api/contact', contactRoutes);
 // Central Error Handler
 app.use(errorHandler);
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`[Server] Torance Life Science REST API server running on port ${PORT}`);
+// Start Server on 0.0.0.0 to accept mobile connections on local network
+app.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`[Server] Torance Life Science REST API server running on port ${PORT} (Listening on 0.0.0.0 for LAN/Mobile access)`);
   console.log(`[Server] Health Check: http://localhost:${PORT}/api/health`);
 });

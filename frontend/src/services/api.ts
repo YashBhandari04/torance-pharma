@@ -2,18 +2,26 @@ import axios from 'axios';
 import { PRODUCTS, CATEGORIES, CAREERS_LIST } from '../data/mockData';
 import { Product, Category, Enquiry, Career } from '../types';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Dynamically resolve API URL so requests from mobile phones on local Wi-Fi hit backend IP
+const getDynamicApiUrl = (): string => {
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+  const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+  return `http://${hostname}:5000/api`;
+};
 
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: getDynamicApiUrl(),
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000,
+  timeout: 15000,
 });
 
-// Interceptor to attach JWT token for protected admin calls
 api.interceptors.request.use((config) => {
+  if (!config.baseURL || config.baseURL.includes('localhost')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    config.baseURL = import.meta.env.VITE_API_URL || `http://${hostname}:5000/api`;
+  }
   const token = localStorage.getItem('torance_admin_token');
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;

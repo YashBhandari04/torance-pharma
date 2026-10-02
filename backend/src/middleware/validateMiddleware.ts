@@ -29,7 +29,7 @@ export const enquiryZodSchema = z.object({
   city: z.string().min(2, 'City name is required.'),
   state: z.string().optional(),
   country: z.string().optional(),
-  message: z.string().min(10, 'Inquiry message must be at least 10 characters.'),
+  message: z.string().min(5, 'Inquiry message must be at least 5 characters.'),
 });
 
 export const contactZodSchema = z.object({
