@@ -11,6 +11,7 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import enquiryRoutes from './routes/enquiryRoutes.js';
 import careerRoutes from './routes/careerRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
+import seoRoutes from './routes/seoRoutes.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -93,6 +94,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/careers', careerRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/', seoRoutes);
 
 // Central Error Handler
 app.use(errorHandler);
