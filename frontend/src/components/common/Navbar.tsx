@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   Phone, Mail, Search, Menu, X, Shield, 
-  ChevronRight, Building2, Pill, Users, FlaskConical, Briefcase, MessageSquareText, Lock
+  Building2, Pill, MessageSquareText, Lock, MessageSquare
 } from 'lucide-react';
 import { COMPANY_INFO } from '../../data/mockData';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -12,14 +13,13 @@ export const Navbar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
 
+  const whatsappNumber = COMPANY_INFO.phone?.whatsapp?.replace(/[^0-9]/g, '') || '918102343062';
+
   const navLinks = [
-    { name: 'Home', path: '/', icon: Building2 },
-    { name: 'About Us', path: '/about', icon: Shield },
-    { name: 'Products', path: '/products', icon: Pill },
-    { name: 'Divisions', path: '/divisions', icon: Users },
-    { name: 'R & D', path: '/research-development', icon: FlaskConical },
-    { name: 'Careers', path: '/careers', icon: Briefcase },
-    { name: 'Contact Us', path: '/contact', icon: MessageSquareText },
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   const isActive = (path: string) => {
@@ -29,9 +29,9 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="relative z-50 shadow-sm transition-all duration-300">
-      {/* Top Corporate Information Bar */}
-      <div className="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+    <header className="relative z-50 shadow-md transition-all duration-300">
+      {/* Top Corporate Info Bar */}
+      <div className="bg-[#040D1E] text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
           <div className="flex items-center space-x-6">
             <a href={`tel:${COMPANY_INFO.phone.board}`} className="flex items-center space-x-1.5 hover:text-sky-400 transition-colors">
@@ -57,28 +57,31 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Glassmorphic Navigation Bar */}
-      <nav className="glass-card bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 py-3.5">
+      {/* GoDaddy Style Dark Navy Main Navigation */}
+      <nav className="bg-[#06142E] text-white px-4 py-3.5 border-b border-slate-800 shadow-lg">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* Corporate Brand Logo */}
-          <Link to="/" className="flex items-center group py-1">
-            <img 
-              src="/logo.png" 
-              alt="Torrance Life Science Pvt Ltd" 
-              className="h-16 sm:h-20 lg:h-24 w-auto object-contain transition-transform duration-200 group-hover:scale-105 drop-shadow-xs"
-            />
+          
+          {/* Brand Logo Box */}
+          <Link to="/" className="flex items-center py-1">
+            <div className="bg-white p-2 rounded-xl shadow-md border border-slate-200">
+              <img 
+                src="/logo.png" 
+                alt="Torrance Life Science Pvt Ltd" 
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
+            </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+                className={`text-sm font-semibold transition-colors relative py-1 ${
                   isActive(link.path)
-                    ? 'text-sky-600 bg-sky-50 font-semibold shadow-xs'
-                    : 'text-slate-700 hover:text-sky-600 hover:bg-slate-50'
+                    ? 'text-white border-b-2 border-sky-400'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
                 {link.name}
@@ -86,76 +89,77 @@ export const Navbar: React.FC = () => {
             ))}
           </div>
 
-          {/* Actions & Business CTA */}
-          <div className="hidden md:flex items-center space-x-3">
+          {/* GoDaddy Style WhatsApp CTA Button */}
+          <div className="hidden md:flex items-center space-x-4">
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2 text-slate-600 hover:text-sky-600 hover:bg-slate-100 rounded-lg transition-colors"
-              title="Search medicines and products"
-              aria-label="Search product catalog"
+              className="p-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              title="Search catalog"
+              aria-label="Search"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            <Link
-              to="/contact"
-              className="inline-flex items-center px-4 py-2 rounded-lg bg-slate-900 hover:bg-sky-600 text-white font-medium text-sm transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            <a
+              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello Torrance Life Science Team! I want to inquire about products.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-4.5 py-2.5 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md transition-all duration-200 gap-2"
             >
-              <span>Business Enquiry</span>
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Link>
+              <WhatsAppIcon className="w-5 h-5 fill-white" />
+              <span>Chat on WhatsApp</span>
+            </a>
           </div>
 
-          {/* Mobile Menu & Search Button Toggle */}
+          {/* Mobile Menu Toggle */}
           <div className="flex md:hidden items-center space-x-2">
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg"
+              className="p-2 text-slate-300 hover:bg-slate-800 rounded-lg"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-800 hover:bg-slate-100 rounded-lg focus:outline-none"
+              className="p-2 text-slate-200 hover:bg-slate-800 rounded-lg focus:outline-none"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
+
         </div>
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 pt-3 border-t border-slate-200 animate-fadeIn">
-            <div className="flex flex-col space-y-1 pb-3">
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center space-x-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(link.path)
-                        ? 'bg-sky-50 text-sky-600 font-semibold'
-                        : 'text-slate-700 hover:bg-slate-100'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4 text-sky-500" />
-                    <span>{link.name}</span>
-                  </Link>
-                );
-              })}
-              <div className="pt-2 px-2">
+          <div className="md:hidden mt-3 pt-3 border-t border-slate-800 animate-fadeIn">
+            <div className="flex flex-col space-y-2 pb-3">
+              {navLinks.map((link) => (
                 <Link
-                  to="/contact"
+                  key={link.path}
+                  to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-lg bg-sky-600 text-white font-semibold text-sm shadow-sm"
+                  className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                    isActive(link.path)
+                      ? 'bg-sky-500/20 text-sky-400'
+                      : 'text-slate-300 hover:bg-slate-800'
+                  }`}
                 >
-                  <MessageSquareText className="w-4 h-4" />
-                  <span>Submit Business Enquiry</span>
+                  {link.name}
                 </Link>
+              ))}
+              <div className="pt-2 px-2">
+                <a
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello Torrance Life Science Team! I want to inquire about products.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center space-x-2 py-3 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md transition-all duration-200"
+                >
+                  <WhatsAppIcon className="w-5 h-5 fill-white" />
+                  <span>Chat on WhatsApp</span>
+                </a>
               </div>
             </div>
           </div>

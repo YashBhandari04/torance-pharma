@@ -1,80 +1,96 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Heart, Activity, ShieldCheck, Brain, Bone, Sparkles, ArrowRight 
-} from 'lucide-react';
-import { CATEGORIES } from '../../data/mockData';
-
-const iconMap: Record<string, React.ReactNode> = {
-  Heart: <Heart className="w-6 h-6 text-red-500" />,
-  Activity: <Activity className="w-6 h-6 text-sky-500" />,
-  ShieldCheck: <ShieldCheck className="w-6 h-6 text-emerald-500" />,
-  Brain: <Brain className="w-6 h-6 text-purple-500" />,
-  Bone: <Bone className="w-6 h-6 text-amber-500" />,
-  Sparkles: <Sparkles className="w-6 h-6 text-indigo-500" />,
-};
+import { Pill, Syringe, FlaskConical, TestTube } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const TherapeuticCategories: React.FC = () => {
+  const portfolioRanges = [
+    {
+      title: 'Tablets & Capsules',
+      slug: 'tablets-capsules',
+      icon: Pill,
+      description: 'Oral solid dosage forms manufactured under strict GMP standards for consistent efficacy and safety.'
+    },
+    {
+      title: 'Injections',
+      slug: 'injections',
+      icon: Syringe,
+      description: 'Sterile injectable solutions and suspensions for critical care, hospitals, and clinical settings.'
+    },
+    {
+      title: 'Syrups & Suspensions',
+      slug: 'syrups-suspensions',
+      icon: FlaskConical,
+      description: 'Liquid oral formulations for paediatric and adult use, available in a wide therapeutic range.'
+    },
+    {
+      title: 'Ointments & Creams',
+      slug: 'ointments-creams',
+      icon: TestTube,
+      description: 'Topical preparations for dermatological and wound-care applications with proven formulations.'
+    },
+  ];
+
   return (
     <section className="py-20 bg-slate-50 border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 space-y-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <div className="text-sky-600 font-semibold text-xs tracking-widest uppercase mb-1">
-              Therapeutic Portfolio
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Specialized Medical Divisions
-            </h2>
-          </div>
-          <Link 
-            to="/products"
-            className="inline-flex items-center text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors group"
-          >
-            <span>View All Therapeutic Categories</span>
-            <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto space-y-3"
+        >
+          <span className="text-xs font-bold text-sky-600 uppercase tracking-widest">
+            OUR PORTFOLIO
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+            Comprehensive Pharmaceutical Range
+          </h2>
+          <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
+            From essential generics to specialty formulations — we supply what healthcare demands.
+          </p>
+        </motion.div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {CATEGORIES.map((cat) => (
-            <Link
-              key={cat._id}
-              to={`/products?category=${cat.slug}`}
-              className="group p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative flex flex-col justify-between overflow-hidden"
-            >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    {iconMap[cat.icon] || <Activity className="w-6 h-6 text-sky-500" />}
+        {/* 4 Grid Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {portfolioRanges.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.12 }}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              >
+                <Link
+                  to={`/products?category=${encodeURIComponent(item.slug)}`}
+                  className="group bg-white p-8 rounded-2xl border border-slate-200 shadow-xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full"
+                >
+                  <div className="space-y-5">
+                    <motion.div 
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                      className="w-14 h-14 rounded-full bg-[#091E42] text-white flex items-center justify-center shadow-md group-hover:bg-sky-600 transition-colors"
+                    >
+                      <Icon className="w-7 h-7" />
+                    </motion.div>
+                    
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-slate-600 text-sm leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold group-hover:bg-sky-50 group-hover:text-sky-600 transition-colors">
-                    {cat.productCount || 20}+ Formulations
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
-                    {cat.name}
-                  </h3>
-                  <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                    {cat.description}
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-6 mt-4 border-t border-slate-100 flex items-center text-xs font-semibold text-sky-600 group-hover:translate-x-1 transition-transform">
-                <span>Explore Products</span>
-                <ArrowRight className="w-3.5 h-3.5 ml-1" />
-              </div>
-
-              {/* Decorative hover gradient border line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
-          ))}
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>
