@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { EnquiryModel } from '../models/Enquiry.js';
 import { sendEnquiryNotificationEmail } from '../utils/emailSender.js';
+import { getDb, schema } from '../db/index.js';
 
 // Helper to sanitize HTML tags from string inputs to prevent XSS / HTML injection
 const sanitize = (text?: string): string => {
@@ -72,22 +73,54 @@ export const createEnquiry = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    // 1. Create and Save Enquiry in MongoDB Atlas
-    const newEnquiry = await EnquiryModel.create({
-      fullName: cleanFullName,
-      email: cleanEmail,
-      phone: cleanPhone,
-      companyName: cleanCompanyName,
-      enquiryType,
-      city: cleanCity,
-      state: cleanState,
-      country: cleanCountry,
-      message: cleanMessage,
-      status: 'NEW',
-      emailStatus: 'pending'
-    });
+    // 1. Create and Save Enquiry in MongoDB Atlas (with graceful fallback if DB is offline)
+    let newEnquiry: any = null;
+    try {
+      newEnquiry = await EnquiryModel.create({
+        fullName: cleanFullName,
+        email: cleanEmail,
+        phone: cleanPhone,
+        companyName: cleanCompanyName,
+        enquiryType,
+        city: cleanCity,
+        state: cleanState,
+        country: cleanCountry,
+        message: cleanMessage,
+        status: 'NEW',
+        emailStatus: 'pending'
+      });
+      console.log(`[Enquiry Saved to DB] ID: ${newEnquiry._id} | Type: ${newEnquiry.enquiryType}`);
+    } catch (dbErr: any) {
+      console.warn(`[DB Storage Warning] MongoDB offline or write error: ${dbErr.message}. Proceeding with email delivery.`);
+      newEnquiry = {
+        _id: 'temp_' + Date.now(),
+        fullName: cleanFullName,
+        email: cleanEmail,
+        phone: cleanPhone,
+        companyName: cleanCompanyName,
+        enquiryType,
+        city: cleanCity,
+        state: cleanState,
+      };
+    }
 
-    console.log(`[Enquiry Saved] ID: ${newEnquiry._id} | Type: ${newEnquiry.enquiryType} | Customer: ${newEnquiry.fullName} (${newEnquiry.email})`);
+    // 1b. Store in Drizzle MySQL (inquiry table) if connection is active
+    try {
+      const mysqlDb = getDb();
+      if (mysqlDb) {
+        await mysqlDb.insert(schema.inquiry).values({
+          name: cleanFullName,
+          email: cleanEmail,
+          phone: cleanPhone,
+          company: cleanCompanyName || '',
+          message: cleanMessage,
+          status: 'new'
+        } as any);
+        console.log(`[Drizzle MySQL] Saved inquiry record for ${cleanEmail}`);
+      }
+    } catch (drizzleErr: any) {
+      console.warn(`[Drizzle MySQL Notice] MySQL insert skipped: ${drizzleErr.message}`);
+    }
 
     // 2. Dispatch Email Notification to Manager (TO -> Manager, REPLY-TO -> Customer)
     let emailSent = false;
@@ -97,9 +130,15 @@ export const createEnquiry = async (req: Request, res: Response): Promise<void> 
       console.warn('[Email Dispatch Warning]:', err.message);
     }
 
-    // 3. Update Email Status in MongoDB
-    newEnquiry.emailStatus = emailSent ? 'sent' : 'failed';
-    await newEnquiry.save();
+    // 3. Update Email Status in MongoDB if record exists
+    if (newEnquiry && typeof newEnquiry.save === 'function') {
+      try {
+        newEnquiry.emailStatus = emailSent ? 'sent' : 'failed';
+        await newEnquiry.save();
+      } catch (err: any) {
+        console.warn('[DB Status Update Notice]:', err.message);
+      }
+    }
 
     // 4. Send Success Response to Frontend
     res.status(201).json({

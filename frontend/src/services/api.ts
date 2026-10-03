@@ -2,11 +2,18 @@ import axios from 'axios';
 import { PRODUCTS, CATEGORIES, CAREERS_LIST } from '../data/mockData';
 import { Product, Category, Enquiry, Career } from '../types';
 
-// Dynamically resolve API URL so requests from mobile phones on local Wi-Fi hit backend IP
+// Dynamically resolve API URL for local dev, local network Wi-Fi, and live Vercel production
 const getDynamicApiUrl = (): string => {
   if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-  const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-  return `http://${hostname}:5000/api`;
+  if (typeof window !== 'undefined' && window.location.hostname) {
+    const hostname = window.location.hostname;
+    // If running on live Vercel domain or any HTTPS production domain, target relative /api endpoint
+    if (hostname.endsWith('.vercel.app') || window.location.protocol === 'https:') {
+      return '/api';
+    }
+    return `http://${hostname}:5000/api`;
+  }
+  return 'http://localhost:5000/api';
 };
 
 export const api = axios.create({
@@ -18,10 +25,7 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  if (!config.baseURL || config.baseURL.includes('localhost')) {
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    config.baseURL = import.meta.env.VITE_API_URL || `http://${hostname}:5000/api`;
-  }
+  config.baseURL = getDynamicApiUrl();
   const token = localStorage.getItem('torance_admin_token');
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
