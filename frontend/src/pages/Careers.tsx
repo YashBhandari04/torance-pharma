@@ -28,22 +28,52 @@ export const Careers: React.FC = () => {
     fetchCareers();
   }, []);
 
-  const handleSubmitApplication = (e: React.FormEvent) => {
+  const handleSubmitApplication = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
+
+    try {
+      if (accessKey) {
+        await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            subject: `Job Application: ${selectedJob?.title || 'General'} - ${applicantName.trim()}`,
+            from_name: `${applicantName.trim()} (Job Applicant)`,
+            replyto: applicantEmail.trim(),
+            reply_to: applicantEmail.trim(),
+            name: applicantName.trim(),
+            email: applicantEmail.trim(),
+            phone: applicantPhone.trim(),
+            job_title: selectedJob?.title || 'General Application',
+            department: selectedJob?.department || 'N/A',
+            location: selectedJob?.location || 'N/A',
+            resume_link: resumeLink.trim(),
+            message: coverNote.trim()
+          })
+        });
+      }
+    } catch (err) {
+      console.error('Job application submission error:', err);
+    }
+
+    setIsSubmitting(false);
+    setSubmitted(true);
     setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        setSelectedJob(null);
-        setApplicantName('');
-        setApplicantEmail('');
-        setApplicantPhone('');
-        setResumeLink('');
-        setCoverNote('');
-      }, 2500);
-    }, 1000);
+      setSubmitted(false);
+      setSelectedJob(null);
+      setApplicantName('');
+      setApplicantEmail('');
+      setApplicantPhone('');
+      setResumeLink('');
+      setCoverNote('');
+    }, 2500);
   };
 
   return (

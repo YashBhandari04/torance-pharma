@@ -80,8 +80,10 @@ export const Contact: React.FC = () => {
         },
         body: JSON.stringify({
           access_key: accessKey || '',
-          subject: 'New Enquiry - Torrance Life Science Website',
-          from_name: 'Torrance Website',
+          subject: `New Enquiry (${enquiryType}) - ${cleanName}`,
+          from_name: `${cleanName} (Torrance Website)`,
+          replyto: cleanEmail,
+          reply_to: cleanEmail,
           name: cleanName,
           email: cleanEmail,
           phone: cleanPhone,
