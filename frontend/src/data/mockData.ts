@@ -9,9 +9,9 @@ export const COMPANY_INFO = {
   address: 'Apartment No. 4, F.F, Gokuldham Society, Faridabad Sector-3, Haryana – 121004',
   manufacturingFacility: 'WHO-GMP & ISO Certified Manufacturing Facilities, India',
   email: {
-    enquiry: 'enquiry@torancelifescience.com',
-    corporate: 'info@torancelifescience.com',
-    careers: 'careers@torancelifescience.com'
+    enquiry: 'rishukumarctps@gmail.com',
+    corporate: 'rishukumarctps@gmail.com',
+    careers: 'rishukumarctps@gmail.com'
   },
   phone: {
     board: '+91 (079) 4900-5800',

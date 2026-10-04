@@ -9,7 +9,7 @@ export type DosageForm =
   | 'Infusion' 
   | 'Nutraceutical';
 
-export type EnquiryType = 'Distributor' | 'Hospital' | 'Business Partner' | 'General';
+export type EnquiryType = 'PCD Franchise' | 'Hospital Supply' | 'Product Enquiry' | 'Other';
 
 export type EnquiryStatus = 'NEW' | 'IN_PROGRESS' | 'CONTACTED' | 'CLOSED';
 

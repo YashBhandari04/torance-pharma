@@ -5,7 +5,6 @@ import {
   CheckCircle2, AlertCircle, Clock, Loader2 
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/mockData';
-import { EnquiryService } from '../services/api';
 import { EnquiryType } from '../types';
 
 export const Contact: React.FC = () => {
@@ -13,7 +12,7 @@ export const Contact: React.FC = () => {
   const prefilledProduct = searchParams.get('product') || '';
   const prefilledDivision = searchParams.get('division') || '';
 
-  const [enquiryType, setEnquiryType] = useState<EnquiryType>('Distributor');
+  const [enquiryType, setEnquiryType] = useState<EnquiryType>('PCD Franchise');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -29,8 +28,8 @@ export const Contact: React.FC = () => {
       : ''
   );
 
-  // Anti-spam Honeypot field (Hidden from human users)
-  const [honeypot, setHoneypot] = useState('');
+  // Anti-spam Honeypot botcheck field
+  const [botcheck, setBotcheck] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -39,7 +38,7 @@ export const Contact: React.FC = () => {
     e.preventDefault();
     setStatusMessage(null);
 
-    // 1. Client-Side Validation
+    // 1. Validation
     const cleanName = fullName.trim();
     if (!cleanName || cleanName.length < 2) {
       setStatusMessage({ type: 'error', text: 'Please enter your full name (at least 2 characters).' });
@@ -49,56 +48,64 @@ export const Contact: React.FC = () => {
     const cleanEmail = email.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!cleanEmail || !emailRegex.test(cleanEmail)) {
-      setStatusMessage({ type: 'error', text: 'Please enter a valid email address (e.g. name@company.com).' });
-      return;
-    }
-
-    const cleanPhone = phone.trim();
-    const digitsOnly = cleanPhone.replace(/[^0-9]/g, '');
-    if (!cleanPhone || digitsOnly.length < 8) {
-      setStatusMessage({ type: 'error', text: 'Please enter a valid phone / WhatsApp number (at least 8 digits).' });
-      return;
-    }
-
-    const cleanCity = city.trim();
-    if (!cleanCity || cleanCity.length < 2) {
-      setStatusMessage({ type: 'error', text: 'Please enter your city name.' });
+      setStatusMessage({ type: 'error', text: 'Please enter a valid email address.' });
       return;
     }
 
     const cleanMsg = message.trim();
     if (!cleanMsg || cleanMsg.length < 5) {
-      setStatusMessage({ type: 'error', text: 'Please provide detailed inquiry message (at least 5 characters).' });
+      setStatusMessage({ type: 'error', text: 'Please enter your inquiry message (at least 5 characters).' });
       return;
     }
+
+    const cleanPhone = phone.trim();
+    const cleanCity = city.trim();
+
+    // Silently reject spam bots filling the honeypot
+    if (botcheck) {
+      return;
+    }
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
 
     setLoading(true);
 
     try {
-      // 2. Submit to Backend API via POST
-      const res = await EnquiryService.submitEnquiry({
-        fullName: cleanName,
-        email: cleanEmail,
-        phone: cleanPhone,
-        companyName: companyName.trim(),
-        enquiryType,
-        city: cleanCity,
-        state: state.trim(),
-        country: country.trim() || 'India',
-        message: cleanMsg,
-        website: honeypot // Anti-spam bot trap
-      } as any);
+      // 2. Submit to Web3Forms API via POST as JSON
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: accessKey || '',
+          subject: 'New Enquiry - Torrance Life Science Website',
+          from_name: 'Torrance Website',
+          name: cleanName,
+          email: cleanEmail,
+          phone: cleanPhone,
+          enquiryType: enquiryType,
+          enquiry_type: enquiryType,
+          company: companyName.trim(),
+          city: cleanCity,
+          state: state.trim(),
+          country: country.trim() || 'India',
+          message: cleanMsg,
+          botcheck: botcheck
+        })
+      });
 
+      const data = await response.json();
       setLoading(false);
 
-      if (res.success) {
-        // Show exact success text required
+      if (data.success) {
+        // Clear success message and reset form fields
         setStatusMessage({ 
           type: 'success', 
-          text: res.message || 'Your enquiry has been submitted successfully. Our team will contact you shortly.' 
+          text: 'Thank you, we will contact you shortly.' 
         });
 
-        // Clear form fields ONLY on successful backend submission
         setFullName('');
         setEmail('');
         setPhone('');
@@ -106,20 +113,18 @@ export const Contact: React.FC = () => {
         setCity('');
         setState('');
         setMessage('');
-        setHoneypot('');
+        setBotcheck('');
       } else {
-        // Preserve user entered data on error
         setStatusMessage({ 
           type: 'error', 
-          text: res.message || 'Unable to submit your enquiry right now. Please try again later.' 
+          text: data.message || 'Something went wrong while sending your enquiry. Please try again.' 
         });
       }
     } catch {
       setLoading(false);
-      // Preserve user entered data on network/API failure
       setStatusMessage({ 
         type: 'error', 
-        text: 'Unable to submit your enquiry right now. Please try again later.' 
+        text: 'Something went wrong while sending your enquiry. Please check your connection and try again.' 
       });
     }
   };
@@ -137,7 +142,7 @@ export const Contact: React.FC = () => {
             Contact & Business Enquiries
           </h1>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-            Submit your commercial inquiry below. Every submission is assigned directly to our executive commercial management team.
+            Submit your commercial inquiry below. Every submission is delivered directly to our team at {COMPANY_INFO.email.enquiry}.
           </p>
         </div>
 
@@ -225,7 +230,9 @@ export const Contact: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span>Enquiries: {COMPANY_INFO.email.enquiry}</span>
+                  <a href={`mailto:${COMPANY_INFO.email.enquiry}`} className="hover:text-sky-400 transition-colors">
+                    {COMPANY_INFO.email.enquiry}
+                  </a>
                 </div>
               </div>
             </div>
@@ -250,7 +257,7 @@ export const Contact: React.FC = () => {
             <div className="space-y-2 border-b border-slate-100 pb-4">
               <h2 className="text-2xl font-bold text-slate-900">Transmit Business Enquiry</h2>
               <p className="text-xs text-slate-500">
-                Fill out the required information below. Any legitimate visitor, distributor, hospital, or trade partner can submit an inquiry.
+                Fill out the required information below. Submissions arrive directly in our inbox.
               </p>
             </div>
 
@@ -274,25 +281,25 @@ export const Contact: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               
-              {/* Anti-spam Honeypot (Hidden from Humans) */}
+              {/* Anti-spam Honeypot botcheck field */}
               <input
-                type="text"
-                name="website"
-                value={honeypot}
-                onChange={(e) => setHoneypot(e.target.value)}
+                type="checkbox"
+                name="botcheck"
+                className="hidden"
+                style={{ display: 'none' }}
+                checked={!!botcheck}
+                onChange={(e) => setBotcheck(e.target.checked ? 'true' : '')}
                 tabIndex={-1}
                 autoComplete="off"
-                className="hidden absolute left-[-9999px]"
-                aria-hidden="true"
               />
 
-              {/* Enquiry Type Selector Tabs */}
+              {/* Enquiry Type Selector Options */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Enquiry Type *
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {(['Distributor', 'Hospital', 'Business Partner', 'General'] as EnquiryType[]).map((type) => (
+                  {(['PCD Franchise', 'Hospital Supply', 'Product Enquiry', 'Other'] as EnquiryType[]).map((type) => (
                     <button
                       key={type}
                       type="button"
@@ -341,10 +348,9 @@ export const Contact: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Phone / WhatsApp *</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Phone / WhatsApp</label>
                   <input
                     type="tel"
-                    required
                     placeholder="+91 98765 43210"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -366,10 +372,9 @@ export const Contact: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">City *</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">City</label>
                   <input
                     type="text"
-                    required
                     placeholder="Ahmedabad"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
@@ -420,7 +425,7 @@ export const Contact: React.FC = () => {
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin text-sky-400" />
-                      <span>Sending Enquiry...</span>
+                      <span>Sending...</span>
                     </>
                   ) : (
                     <>
