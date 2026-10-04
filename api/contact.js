@@ -56,7 +56,7 @@ export default async function handler(req, res) {
     const user = process.env.EMAIL_USER || process.env.SMTP_USER || 'yashbhandari696@gmail.com';
     const rawPass = process.env.EMAIL_PASS || process.env.SMTP_PASSWORD || 'txit nyoj xglb ifnb';
     const pass = rawPass.replace(/\s+/g, '');
-    const managerEmail = process.env.MANAGER_EMAIL || process.env.BUSINESS_NOTIFY_EMAIL || 'yashbhandari696@gmail.com';
+    const managerEmail = process.env.MANAGER_EMAIL || process.env.BUSINESS_NOTIFY_EMAIL || 'rishukumarctps@gmail.com';
 
     const transporter = nodemailer.createTransport({
       host,

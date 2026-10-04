@@ -16,7 +16,7 @@ export const sendEnquiryNotificationEmail = async (enquiry: IEnquiry): Promise<b
     const port = Number(process.env.EMAIL_PORT) || 587;
     const user = process.env.EMAIL_USER;
     const pass = process.env.EMAIL_PASS;
-    const managerEmail = process.env.MANAGER_EMAIL || process.env.BUSINESS_NOTIFY_EMAIL || 'info@torancelifescience.com';
+    const managerEmail = process.env.MANAGER_EMAIL || process.env.BUSINESS_NOTIFY_EMAIL || 'rishukumarctps@gmail.com';
 
     // If SMTP credentials are missing or default placeholder, log safe warning and return false
     if (!user || !pass || pass === 'smtp_app_password_placeholder') {

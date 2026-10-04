@@ -28,7 +28,7 @@ export const Contact: React.FC = () => {
       : ''
   );
 
-  // Anti-spam Honeypot botcheck field
+  // Hidden honeypot field named botcheck for anti-spam protection
   const [botcheck, setBotcheck] = useState('');
 
   const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ export const Contact: React.FC = () => {
     e.preventDefault();
     setStatusMessage(null);
 
-    // 1. Validation
+    // 1. Client-Side Validation: Name, email and message are required
     const cleanName = fullName.trim();
     if (!cleanName || cleanName.length < 2) {
       setStatusMessage({ type: 'error', text: 'Please enter your full name (at least 2 characters).' });
@@ -48,30 +48,46 @@ export const Contact: React.FC = () => {
     const cleanEmail = email.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!cleanEmail || !emailRegex.test(cleanEmail)) {
-      setStatusMessage({ type: 'error', text: 'Please enter a valid email address.' });
+      setStatusMessage({ type: 'error', text: 'Please enter a valid email address (e.g. name@company.com).' });
       return;
     }
 
     const cleanMsg = message.trim();
     if (!cleanMsg || cleanMsg.length < 5) {
-      setStatusMessage({ type: 'error', text: 'Please enter your inquiry message (at least 5 characters).' });
+      setStatusMessage({ type: 'error', text: 'Please enter your message (at least 5 characters).' });
       return;
     }
 
     const cleanPhone = phone.trim();
     const cleanCity = city.trim();
 
-    // Silently reject spam bots filling the honeypot
+    // Silently drop bot submissions if honeypot is filled
     if (botcheck) {
       return;
     }
 
-    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
-
-    setLoading(true);
-
     try {
-      // 2. Submit to Web3Forms API via POST as JSON
+      // Extract and trim environment variable
+      const accessKey = import.meta.env.VITE_WEB3FORMS_KEY?.trim();
+
+      // Safe debug log: NEVER print the actual access key
+      const uuidRegex =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+      console.log("Web3Forms key exists:", !!accessKey);
+      console.log("Web3Forms key valid UUID:", !!accessKey && uuidRegex.test(accessKey));
+
+      if (!accessKey) {
+        throw new Error("Web3Forms access key is missing");
+      }
+
+      if (!uuidRegex.test(accessKey)) {
+        throw new Error("Web3Forms access key is not a valid UUID");
+      }
+
+      setLoading(true);
+
+      // Submit to Web3Forms API using POST as JSON
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
@@ -79,22 +95,19 @@ export const Contact: React.FC = () => {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          access_key: accessKey || '',
-          subject: `New Enquiry (${enquiryType}) - ${cleanName}`,
-          from_name: `${cleanName} (Torrance Website)`,
-          replyto: cleanEmail,
-          reply_to: cleanEmail,
+          access_key: accessKey,
+          subject: 'New Enquiry - Torrance Life Science Website',
+          from_name: 'Torrance Life Science Website',
           name: cleanName,
           email: cleanEmail,
           phone: cleanPhone,
           enquiryType: enquiryType,
-          enquiry_type: enquiryType,
           company: companyName.trim(),
           city: cleanCity,
           state: state.trim(),
           country: country.trim() || 'India',
           message: cleanMsg,
-          botcheck: botcheck
+          botcheck: ''
         })
       });
 
@@ -102,10 +115,10 @@ export const Contact: React.FC = () => {
       setLoading(false);
 
       if (data.success) {
-        // Clear success message and reset form fields
-        setStatusMessage({ 
-          type: 'success', 
-          text: 'Thank you, we will contact you shortly.' 
+        // Show thank-you message & reset form on success
+        setStatusMessage({
+          type: 'success',
+          text: 'Thank you, we will contact you shortly.'
         });
 
         setFullName('');
@@ -117,16 +130,17 @@ export const Contact: React.FC = () => {
         setMessage('');
         setBotcheck('');
       } else {
-        setStatusMessage({ 
-          type: 'error', 
-          text: data.message || 'Something went wrong while sending your enquiry. Please try again.' 
+        // Show friendly error message on failure
+        setStatusMessage({
+          type: 'error',
+          text: data.message || 'Something went wrong while sending your message. Please try again.'
         });
       }
-    } catch {
+    } catch (err: any) {
       setLoading(false);
-      setStatusMessage({ 
-        type: 'error', 
-        text: 'Something went wrong while sending your enquiry. Please check your connection and try again.' 
+      setStatusMessage({
+        type: 'error',
+        text: err?.message || 'Unable to send your message right now. Please check your network connection and try again.'
       });
     }
   };
@@ -144,7 +158,7 @@ export const Contact: React.FC = () => {
             Contact & Business Enquiries
           </h1>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-            Submit your commercial inquiry below. Every submission is delivered directly to our team at {COMPANY_INFO.email.enquiry}.
+            Submit your commercial inquiry below. Every submission is assigned directly to our executive commercial management team.
           </p>
         </div>
 
@@ -259,7 +273,7 @@ export const Contact: React.FC = () => {
             <div className="space-y-2 border-b border-slate-100 pb-4">
               <h2 className="text-2xl font-bold text-slate-900">Transmit Business Enquiry</h2>
               <p className="text-xs text-slate-500">
-                Fill out the required information below. Submissions arrive directly in our inbox.
+                Fill out the required information below. Submissions are delivered directly via Web3Forms.
               </p>
             </div>
 
@@ -283,7 +297,7 @@ export const Contact: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               
-              {/* Anti-spam Honeypot botcheck field */}
+              {/* Anti-spam Honeypot field named botcheck */}
               <input
                 type="checkbox"
                 name="botcheck"
@@ -295,7 +309,7 @@ export const Contact: React.FC = () => {
                 autoComplete="off"
               />
 
-              {/* Enquiry Type Selector Options */}
+              {/* Enquiry Type Options */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Enquiry Type *

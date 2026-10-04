@@ -31,7 +31,7 @@ export const sendContactEmail = async ({
   const user = process.env.SMTP_USER || process.env.EMAIL_USER;
   const pass = process.env.SMTP_PASSWORD || process.env.EMAIL_PASS;
   
-  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || process.env.MANAGER_EMAIL || process.env.BUSINESS_NOTIFY_EMAIL || 'support@torancelifescience.com';
+  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || process.env.MANAGER_EMAIL || process.env.BUSINESS_NOTIFY_EMAIL || 'rishukumarctps@gmail.com';
   const fromEmail = process.env.CONTACT_FROM_EMAIL || (user ? `Website Contact Form <${user}>` : `Website Contact Form <no-reply@torancelifescience.com>`);
 
   // If credentials are missing or default placeholder, log safe server warning and return false
