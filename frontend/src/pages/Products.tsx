@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { 
-  Search, Filter, Pill, ShieldCheck, ChevronRight, X, SlidersHorizontal, ArrowRight
+  Search, Filter, Pill, ShieldCheck, ChevronRight, ChevronLeft, X, SlidersHorizontal, ArrowRight
 } from 'lucide-react';
 import { ProductService, CategoryService } from '../services/api';
 import { Product, Category, DosageForm } from '../types';
@@ -89,6 +89,35 @@ export const Products: React.FC = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    const catalogHeader = document.getElementById('catalog-results-header');
+    if (catalogHeader) {
+      catalogHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 350, behavior: 'smooth' });
+    }
+  };
+
+  // Smart responsive windowed pagination range with ellipsis
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 4) {
+        pages.push(1, 2, 3, 4, 5, '...', totalPages);
+      } else if (currentPage >= totalPages - 3) {
+        pages.push(1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+      }
+    }
+    return pages;
+  };
 
   return (
     <div className="py-12 bg-slate-50 min-h-screen">
@@ -197,7 +226,7 @@ export const Products: React.FC = () => {
         </div>
 
         {/* Product Grid & Active Results Header */}
-        <div>
+        <div id="catalog-results-header">
           <div className="flex justify-between items-center mb-6">
             <p className="text-sm font-semibold text-slate-600">
               Showing <span className="text-slate-900 font-bold">{displayedProducts.length}</span> of {safeProducts.length} verified products
@@ -307,36 +336,76 @@ export const Products: React.FC = () => {
 
         {/* Pagination Bar */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center space-x-2 pt-6">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(prev => prev - 1)}
-              className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
-            >
-              Previous
-            </button>
-
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <div className="pt-8 space-y-4">
+            {/* Mobile View (< sm): Compact and touch-friendly */}
+            <div className="flex sm:hidden items-center justify-between w-full bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
               <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={`w-9 h-9 rounded-xl text-xs font-semibold transition-colors ${
-                  currentPage === page
-                    ? 'bg-sky-600 text-white shadow-sm'
-                    : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
-                }`}
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+                className="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 flex items-center space-x-1"
               >
-                {page}
+                <ChevronLeft className="w-4 h-4" />
+                <span>Prev</span>
               </button>
-            ))}
 
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage(prev => prev + 1)}
-              className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
-            >
-              Next
-            </button>
+              <span className="text-xs font-semibold text-slate-600">
+                Page <span className="text-sky-600 font-bold">{currentPage}</span> of <span className="text-slate-900 font-bold">{totalPages}</span>
+              </span>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+                className="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 flex items-center space-x-1"
+              >
+                <span>Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Tablet & Desktop View (>= sm): Windowed pagination with ellipsis */}
+            <div className="hidden sm:flex justify-center items-center space-x-1.5 flex-wrap gap-y-2">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+                className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 flex items-center space-x-1 mr-1 shadow-2xs"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>Previous</span>
+              </button>
+
+              {getPageNumbers().map((page, idx) => {
+                if (page === '...') {
+                  return (
+                    <span key={`ellipsis-${idx}`} className="w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-400">
+                      ...
+                    </span>
+                  );
+                }
+                const pageNum = Number(page);
+                return (
+                  <button
+                    key={`page-${pageNum}`}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`w-9 h-9 rounded-xl text-xs font-semibold transition-all ${
+                      currentPage === pageNum
+                        ? 'bg-sky-600 text-white shadow-sm ring-2 ring-sky-600/20'
+                        : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-2xs'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+                className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 flex items-center space-x-1 ml-1 shadow-2xs"
+              >
+                <span>Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         )}
 
