@@ -29,17 +29,24 @@ export const Products: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const [cats, prods] = await Promise.all([
-        CategoryService.getCategories(),
-        ProductService.getAllProducts({
-          category: selectedCategory,
-          dosageForm: selectedDosage,
-          search: searchQuery,
-        })
-      ]);
-      setCategories(cats);
-      setProducts(prods);
-      setLoading(false);
+      try {
+        const [cats, prods] = await Promise.all([
+          CategoryService.getCategories(),
+          ProductService.getAllProducts({
+            category: selectedCategory,
+            dosageForm: selectedDosage,
+            search: searchQuery,
+          })
+        ]);
+        setCategories(Array.isArray(cats) ? cats : []);
+        setProducts(Array.isArray(prods) ? prods : []);
+      } catch (err) {
+        console.error('Error fetching products or categories:', err);
+        setCategories([]);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -74,9 +81,11 @@ export const Products: React.FC = () => {
     setCurrentPage(1);
   };
 
-  // Pagination logic
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-  const displayedProducts = products.slice(
+  // Pagination logic with array safety
+  const safeProducts = Array.isArray(products) ? products : [];
+  const safeCategories = Array.isArray(categories) ? categories : [];
+  const totalPages = Math.ceil(safeProducts.length / itemsPerPage);
+  const displayedProducts = safeProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -167,10 +176,10 @@ export const Products: React.FC = () => {
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
-              All Categories ({products.length})
+              All Categories ({safeProducts.length})
             </button>
 
-            {categories.map((cat) => (
+            {safeCategories.map((cat) => (
               <button
                 key={cat._id}
                 type="button"
@@ -191,7 +200,7 @@ export const Products: React.FC = () => {
         <div>
           <div className="flex justify-between items-center mb-6">
             <p className="text-sm font-semibold text-slate-600">
-              Showing <span className="text-slate-900 font-bold">{displayedProducts.length}</span> of {products.length} verified products
+              Showing <span className="text-slate-900 font-bold">{displayedProducts.length}</span> of {safeProducts.length} verified products
             </p>
 
             {(selectedCategory !== 'all' || selectedDosage !== 'all' || searchQuery) && (

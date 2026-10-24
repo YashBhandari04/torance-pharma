@@ -38,9 +38,12 @@ export const ProductService = {
   async getAllProducts(params?: { category?: string; search?: string; dosageForm?: string }): Promise<Product[]> {
     try {
       const response = await api.get('/products', { params });
-      return response.data.data;
+      if (response.data && Array.isArray(response.data.data)) {
+        return response.data.data;
+      }
+      throw new Error('Invalid products payload received');
     } catch {
-      // Fallback to local baseline mock data if backend server is offline during Phase 2/3
+      // Fallback to local baseline mock data if backend server is offline or returned non-JSON/HTML
       let result = [...PRODUCTS];
       if (params?.category && params.category !== 'all') {
         result = result.filter(p => {
@@ -66,7 +69,10 @@ export const ProductService = {
   async getProductById(identifier: string): Promise<Product | null> {
     try {
       const response = await api.get(`/products/${identifier}`);
-      return response.data.data;
+      if (response.data && response.data.data && typeof response.data.data === 'object' && response.data.data._id) {
+        return response.data.data;
+      }
+      throw new Error('Invalid product payload received');
     } catch {
       return PRODUCTS.find(p => p._id === identifier || p.slug === identifier) || null;
     }
@@ -91,7 +97,10 @@ export const CategoryService = {
   async getCategories(): Promise<Category[]> {
     try {
       const response = await api.get('/categories');
-      return response.data.data;
+      if (response.data && Array.isArray(response.data.data)) {
+        return response.data.data;
+      }
+      throw new Error('Invalid categories payload received');
     } catch {
       return CATEGORIES;
     }
@@ -122,7 +131,10 @@ export const CareerService = {
   async getCareers(): Promise<Career[]> {
     try {
       const response = await api.get('/careers');
-      return response.data.data;
+      if (response.data && Array.isArray(response.data.data)) {
+        return response.data.data;
+      }
+      throw new Error('Invalid careers payload received');
     } catch {
       return CAREERS_LIST;
     }

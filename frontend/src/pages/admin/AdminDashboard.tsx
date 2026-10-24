@@ -31,7 +31,7 @@ export const AdminDashboard: React.FC = () => {
         // Fetch enquiries from backend
         try {
           const res = await api.get('/enquiries');
-          setEnquiries(res.data.data);
+          setEnquiries(Array.isArray(res?.data?.data) ? res.data.data : []);
         } catch {
           // Local fallback
           setEnquiries([]);

@@ -21,7 +21,7 @@ export const Careers: React.FC = () => {
     const fetchCareers = async () => {
       setLoading(true);
       const data = await CareerService.getCareers();
-      setCareers(data);
+      setCareers(Array.isArray(data) ? data : []);
       setLoading(false);
     };
 
